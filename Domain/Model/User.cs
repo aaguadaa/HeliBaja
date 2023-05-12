@@ -13,6 +13,7 @@ namespace Domain.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public string APaterno { get; set; }
+        public string AMaterno { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public int? PilotId { get; set; }
