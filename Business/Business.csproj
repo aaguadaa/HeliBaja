@@ -66,9 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IAdminService.cs" />
+    <Compile Include="Contracts\IAgendaService.cs" />
     <Compile Include="Contracts\IFlightService.cs" />
     <Compile Include="Contracts\IUserService.cs" />
     <Compile Include="Implementation\AdminService.cs" />
+    <Compile Include="Implementation\AgendaService.cs" />
     <Compile Include="Implementation\FlightService.cs" />
     <Compile Include="Implementation\UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
