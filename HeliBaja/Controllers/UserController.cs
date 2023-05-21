@@ -20,7 +20,7 @@ namespace YourNamespace.Controllers
         {
             try
             {
-                List<User> users = _userService.GetAllUsers();
+                List<Users> users = _userService.GetAllUsers();
                 return Ok(users);
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace YourNamespace.Controllers
         {
             try
             {
-                User user = _userService.GetUserById(id);
+                Users user = _userService.GetUserById(id);
                 if (user == null)
                     return NotFound();
 
@@ -49,7 +49,7 @@ namespace YourNamespace.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult AddUser(User user)
+        public IHttpActionResult AddUser(Users user)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace YourNamespace.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateUser(User user)
+        public IHttpActionResult UpdateUser(Users user)
         {
             try
             {

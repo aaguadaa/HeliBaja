@@ -12,6 +12,7 @@ namespace Domain.Model
         [Key]
         public int Id_Agenda { get; set; }
         public DateTime Fecha { get; set; }
+        public string Description { get; set; }
         public List<Flight> Flights { get; set; }
         public Flight Flight { get; set; }
     }

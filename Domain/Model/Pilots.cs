@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Model
 {
-    public class Pilot
+    public class Pilots
     {
         [Key]
         public int Id_Pilot { get; set; }

@@ -14,5 +14,9 @@ namespace Data.Contracts
         List<Flight> GetFlights();
         bool DeleteFlight(int Id_Flight);
         bool UpdateFlight(Flight flight);
+        List<Flight> GetAdminFlights();
+        bool AddAdminFlight(Flight flight);
+        bool UpdateAdminFlight(Flight flight);
+        bool DeleteAdminFlight(int flightId);
     }
 }

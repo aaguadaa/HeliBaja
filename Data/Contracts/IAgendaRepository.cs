@@ -12,5 +12,10 @@ namespace Data.Contracts
         List<Flight> GetFlights(int Id_Agenda);
         bool AddFlight(int Id_Agenda, int Id_Flight);
         bool RemoveFlight(int Id_Agenda, int Id_Flight);
+        bool DeleteAdminAgenda(int entryId);
+        bool UpdateAdminAgenda(Agenda entry);
+        bool AddAdminAgenda(Agenda entry);
+        List<Agenda> GetAdminAgenda();
+        Agenda GetAdminAgendaById(int entryId);
     }
 }

@@ -14,13 +14,13 @@ namespace Data.Implementation
             _context = context;
         }
 
-        public int AddUser(User user)
+        public int AddUser(Users user)
         {
             _context.Users.Add(user);
             return _context.SaveChanges();
         }
 
-        public bool UpdateUser(User user)
+        public bool UpdateUser(Users user)
         {
             var existingUser = _context.Users.Find(user.Id);
             if (existingUser == null)
@@ -47,17 +47,17 @@ namespace Data.Implementation
             return _context.SaveChanges() > 0;
         }
 
-        public User GetUserById(int userId)
+        public Users GetUserById(int userId)
         {
             return _context.Users.Find(userId);
         }
 
-        public User GetUserByEmail(string email)
+        public Users GetUserByEmail(string email)
         {
             return _context.Users.FirstOrDefault(u => u.Email == email);
         }
 
-        public List<User> GetAllUsers()
+        public List<Users> GetAllUsers()
         {
             return _context.Users.ToList();
         }

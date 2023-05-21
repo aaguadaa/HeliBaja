@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Contracts
 {
-    public interface IPilotRepository : IGenericRepository<Pilot>
+    public interface IPilotRepository : IGenericRepository<Pilots>
     {
         List<Flight> GetFlights(int pilotId);
         bool AddFlightToPilot(int flightId, int pilotId);

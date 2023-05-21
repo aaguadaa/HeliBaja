@@ -5,18 +5,50 @@ namespace Business.Contracts
 {
     public interface IAdminService
     {
+        // Admin
+
+        List<Admin> GetAdmins();
+        Admin GetAdminById(int adminId);
+        bool AddAdmin(Admin admin);
+        bool UpdateAdmin(Admin admin);
+        bool DeleteAdmin(int adminId);
+
         // Booking
-        List<Booking> GetBookings();
-        bool AddBooking(Booking booking);
-        bool UpdateBooking(Booking booking);
-        bool DeleteBooking(int bookingId);
+
+        List<Booking> GetAdminBookings();
+        bool AddAdminBooking(Booking booking);
+        bool UpdateAdminBooking(Booking booking);
+        bool DeleteAdminBooking(int bookingId);
 
         // Flight
-        List<Flight> GetFlights();
-        bool AddFlight(Flight flight);
-        bool UpdateFlight(Flight flight);
-        bool DeleteFlight(int flightId);
-        bool AssignFlightToPilot(int flightId, int pilotId);
-        bool RemoveFlightFromPilot(int flightId, int pilotId);
+
+        List<Flight> GetAdminFlights();
+        bool AddAdminFlight(Flight flight);
+        bool UpdateAdminFlight(Flight flight);
+        bool DeleteAdminFlight(int flightId);
+
+        // User
+
+        List<Users> GetAdminUsers();
+        Users GetAdminUserById(int userId);
+        bool AddAdminUser(Users user);
+        bool UpdateAdminUser(Users user);
+        bool DeleteAdminUser(int userId);
+
+        // Inventory
+
+        List<Inventory> GetAdminInventory();
+        Inventory GetAdminInventoryById(int itemId);
+        bool AddAdminInventory(Inventory item);
+        bool UpdateAdminInventory(Inventory item);
+        bool DeleteAdminInventory(int itemId);
+
+        // Agenda
+
+        List<Agenda> GetAdminAgenda();
+        Agenda GetAdminAgendaById(int entryId);
+        bool AddAdminAgenda(Agenda entry);
+        bool UpdateAdminAgenda(Agenda entry);
+        bool DeleteAdminAgenda(int entryId);
     }
 }

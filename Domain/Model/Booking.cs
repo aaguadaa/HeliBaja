@@ -15,7 +15,7 @@ namespace Domain.Model
         public int Id_Flight { get; set; }
 
         // Propiedad de navegación
-        public Client Clients { get; set; }
+        public Clients Clients { get; set; }
         public Flight Flights { get; set; }
     }
 }

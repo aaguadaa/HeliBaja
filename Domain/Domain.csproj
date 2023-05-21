@@ -64,11 +64,11 @@
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\Agenda.cs" />
     <Compile Include="Model\Booking.cs" />
-    <Compile Include="Model\Client.cs" />
+    <Compile Include="Model\Clients.cs" />
     <Compile Include="Model\Flight.cs" />
     <Compile Include="Model\Inventory.cs" />
-    <Compile Include="Model\Pilot.cs" />
-    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Pilots.cs" />
+    <Compile Include="Model\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

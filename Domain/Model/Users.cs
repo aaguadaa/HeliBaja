@@ -2,7 +2,7 @@
 
 namespace Domain.Model
 {
-    public class User
+    public class Users
     {
         [Key]
         public int Id { get; set; }
@@ -22,8 +22,8 @@ namespace Domain.Model
         public int? ClientId { get; set; }
 
         // Propiedades de navegación
-        public virtual Client Cliente { get; set; }
+        public virtual Clients Cliente { get; set; }
 
-        public virtual Pilot Piloto { get; set; }
+        public virtual Pilots Piloto { get; set; }
     }
 }

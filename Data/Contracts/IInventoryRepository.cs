@@ -17,5 +17,10 @@ namespace Data.Contracts
         List<Inventory> GetInventoryByTool(string toolName);
         List<Inventory> GetInventoryByDate(DateTime date);
         List<Inventory> GetInventoryByDateRange(DateTime startDate, DateTime endDate);
+        List<Inventory> GetAdminInventory();
+        bool UpdateAdminInventory(Inventory item);
+        bool AddAdminInventory(Inventory item);
+        Inventory GetAdminInventoryById(int itemId);
+        bool DeleteAdminInventory(int itemId);
     }
 }

@@ -30,17 +30,17 @@ namespace Data.Repositories
             return true;
         }
 
-        public async Task<Pilot> GetById(int id)
+        public async Task<Pilots> GetById(int id)
         {
             return await _dbContext.Pilots.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Pilot>> GetAll()
+        public async Task<IEnumerable<Pilots>> GetAll()
         {
             return await _dbContext.Pilots.ToListAsync();
         }
 
-        public async Task<bool> Update(Pilot pilot)
+        public async Task<bool> Update(Pilots pilot)
         {
             if (!_dbContext.Pilots.Local.Any(p => p.Id_Pilot == pilot.Id_Pilot))
             {
@@ -84,22 +84,22 @@ namespace Data.Repositories
             return true;
         }
 
-        int IGenericRepository<Pilot>.Add(Pilot entity)
+        int IGenericRepository<Pilots>.Add(Pilots entity)
         {
             throw new NotImplementedException();
         }
 
-        public Pilot Get(int id)
+        public Pilots Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        bool IGenericRepository<Pilot>.Update(Pilot entity)
+        bool IGenericRepository<Pilots>.Update(Pilots entity)
         {
             throw new NotImplementedException();
         }
 
-        bool IGenericRepository<Pilot>.Delete(int id)
+        bool IGenericRepository<Pilots>.Delete(int id)
         {
             throw new NotImplementedException();
         }

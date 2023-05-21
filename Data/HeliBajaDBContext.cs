@@ -14,9 +14,9 @@ namespace Data
     public class HeliBajaDBContext : DbContext
     {
         public DbSet<Admin> Admin { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Pilot> Pilots { get; set; }
-        public DbSet<Client> Clients { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<Pilots> Pilots { get; set; }
+        public DbSet<Clients> Clients { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Agenda> Agendas { get; set; }
         public DbSet<Inventory> Inventories { get; set; }

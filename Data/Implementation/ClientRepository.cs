@@ -10,7 +10,7 @@ namespace Data.Implementation
 {
     public class ClientRepository : IClientRepository
     {
-        public int Add(Client entity)
+        public int Add(Clients entity)
         {
             throw new NotImplementedException();
         }
@@ -20,7 +20,7 @@ namespace Data.Implementation
             throw new NotImplementedException();
         }
 
-        public Client Get(int id)
+        public Clients Get(int id)
         {
             throw new NotImplementedException();
         }
@@ -30,7 +30,7 @@ namespace Data.Implementation
             throw new NotImplementedException();
         }
 
-        public bool Update(Client entity)
+        public bool Update(Clients entity)
         {
             throw new NotImplementedException();
         }

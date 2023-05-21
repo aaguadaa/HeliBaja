@@ -14,12 +14,12 @@ namespace Business.Implementation
             _userRepository = userRepository;
         }
 
-        public int AddUser(User user)
+        public int AddUser(Users user)
         {
             return _userRepository.AddUser(user);
         }
 
-        public bool UpdateUser(User user)
+        public bool UpdateUser(Users user)
         {
             return _userRepository.UpdateUser(user);
         }
@@ -29,17 +29,17 @@ namespace Business.Implementation
             return _userRepository.DeleteUser(userId);
         }
 
-        public User GetUserById(int userId)
+        public Users GetUserById(int userId)
         {
             return _userRepository.GetUserById(userId);
         }
 
-        public User GetUserByEmail(string email)
+        public Users GetUserByEmail(string email)
         {
             return _userRepository.GetUserByEmail(email);
         }
 
-        public List<User> GetAllUsers()
+        public List<Users> GetAllUsers()
         {
             return _userRepository.GetAllUsers();
         }

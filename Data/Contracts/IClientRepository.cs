@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data.Contracts
 {
-    public interface IClientRepository : IGenericRepository<Client>
+    public interface IClientRepository : IGenericRepository<Clients>
     {
         List<Booking> GetBookings(int clientId);
     }
