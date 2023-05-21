@@ -1,51 +1,67 @@
 ﻿using Business.Contracts;
 using Data.Contracts;
-using Domain;
 using Domain.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Implementation
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepo;
-        public UserService(IUserRepository userRepo)
+        private readonly IUserRepository _userRepository;
+
+        public UserService(IUserRepository userRepository)
         {
-            _userRepo = userRepo;
-        }
-        public int Add(User user)
-        {
-            if (user.Id <= 0) return 0;
-            if (string.IsNullOrEmpty(user.Name)) return 0;
-            if (string.IsNullOrEmpty(user.Password)) return 0;
-            return _userRepo.Add(user);
+            _userRepository = userRepository;
         }
 
-        public bool Delete(int id)
+        public int AddUser(User user)
         {
-            if (id <= 0) return false;
-            return (_userRepo.Delete(id));
+            return _userRepository.AddUser(user);
         }
 
-        public User Get(int id)
+        public bool UpdateUser(User user)
         {
-            User u = _userRepo.Get(id);
-            return u;
+            return _userRepository.UpdateUser(user);
         }
 
-        public bool Update(User user)
+        public bool DeleteUser(int userId)
         {
-            if (user.Id <= 0) return false;
-            if (string.IsNullOrEmpty(user.Name)) return false;
-            if (string.IsNullOrEmpty(user.APaterno)) return false;
-            if (string.IsNullOrEmpty(user.AMaterno)) return false;
-            if (string.IsNullOrEmpty(user.Email)) return false;
-            if (string.IsNullOrEmpty(user.Password)) return false;
-            return _userRepo.Update(user);
+            return _userRepository.DeleteUser(userId);
+        }
+
+        public User GetUserById(int userId)
+        {
+            return _userRepository.GetUserById(userId);
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _userRepository.GetUserByEmail(email);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return _userRepository.GetAllUsers();
+        }
+
+        public List<Booking> GetUserBookings(int userId)
+        {
+            return _userRepository.GetUserBookings(userId);
+        }
+
+        public List<Flight> GetAvailableFlights()
+        {
+            return _userRepository.GetAvailableFlights();
+        }
+
+        public bool BookFlight(int userId, int flightId)
+        {
+            return _userRepository.BookFlight(userId, flightId);
+        }
+
+        public bool CancelBooking(int bookingId)
+        {
+            return _userRepository.CancelBooking(bookingId);
         }
     }
 }

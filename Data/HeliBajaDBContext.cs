@@ -13,7 +13,7 @@ namespace Data
 {
     public class HeliBajaDBContext : DbContext
     {
-        public DbSet<Admin> admin { get; set; }
+        public DbSet<Admin> Admin { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Pilot> Pilots { get; set; }
         public DbSet<Client> Clients { get; set; }

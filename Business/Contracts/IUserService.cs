@@ -1,22 +1,19 @@
-﻿using Domain;
-using Domain.Model;
-using System;
+﻿using Domain.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Contracts
 {
     public interface IUserService
     {
-        //Create
-        int Add(User user);
-        //Read
-        User Get(int id);
-        //Update
-        bool Update(User user);
-        //Delete
-        bool Delete(int id);
+        int AddUser(User user);
+        bool UpdateUser(User user);
+        bool DeleteUser(int userId);
+        User GetUserById(int userId);
+        User GetUserByEmail(string email);
+        List<User> GetAllUsers();
+        List<Booking> GetUserBookings(int userId);
+        List<Flight> GetAvailableFlights();
+        bool BookFlight(int userId, int flightId);
+        bool CancelBooking(int bookingId);
     }
 }

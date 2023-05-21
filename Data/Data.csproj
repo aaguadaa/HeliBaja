@@ -86,24 +86,12 @@
     <Compile Include="Implementation\InventoryRepository.cs" />
     <Compile Include="Implementation\PilotRepository.cs" />
     <Compile Include="Implementation\UserRepository.cs" />
-    <Compile Include="Migrations\202305081429089_heli.cs" />
-    <Compile Include="Migrations\202305081429089_heli.designer.cs">
-      <DependentUpon>202305081429089_heli.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305081430401_heli1.cs" />
-    <Compile Include="Migrations\202305081430401_heli1.designer.cs">
-      <DependentUpon>202305081430401_heli1.cs</DependentUpon>
+    <Compile Include="Migrations\202305211050422_heli.cs" />
+    <Compile Include="Migrations\202305211050422_heli.designer.cs">
+      <DependentUpon>202305211050422_heli.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305081429089_heli.resx">
-      <DependentUpon>202305081429089_heli.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305081430401_heli1.resx">
-      <DependentUpon>202305081430401_heli1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -114,6 +102,11 @@
       <Project>{31E95336-70E5-4ADD-90BF-D09120C41C1C}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202305211050422_heli.resx">
+      <DependentUpon>202305211050422_heli.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

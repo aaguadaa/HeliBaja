@@ -59,6 +59,7 @@
                         HoraSalida = c.DateTime(nullable: false),
                         HoraLlegada = c.DateTime(nullable: false),
                         Id_Agenda = c.Int(nullable: false),
+                        PilotId = c.Int(nullable: false),
                         Agenda_Id_Agenda = c.Int(),
                         Agendas_Id_Agenda = c.Int(),
                         Admin_Id = c.Int(),

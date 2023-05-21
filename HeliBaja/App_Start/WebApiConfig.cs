@@ -1,12 +1,12 @@
 ﻿using Business.Contracts;
 using Business.Implementation;
+using Data;
 using Data.Contracts;
+using Data.Implementation;
 using Data.Repositories;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using SimpleInjector.Lifestyles; // Agregar esta referencia
 using System.Web.Http;
 
 namespace HeliBaja
@@ -26,16 +26,23 @@ namespace HeliBaja
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            var container = new SimpleInjector.Container();
-            container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
-            //User
+            var container = new Container();
+
+            // Set the default scoped lifestyle
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+            // Register dependencies
+            container.RegisterWebApiControllers(config);
             container.Register<IUserService, UserService>();
             container.Register<IUserRepository, UserRepository>();
+            container.Register<IAdminService, AdminService>();
+            container.Register<IAdminRepository, AdminRepository>();
+            container.Register<HeliBajaDBContext>(Lifestyle.Scoped);
 
             container.Verify();
-            //config.DependencyResolver = new SimpleInjectorWebApiDependecyResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver =
-        new SimpleInjectorWebApiDependencyResolver(container);
+
+            // Set the dependency resolver for Web API
+            config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
         }
     }
 }

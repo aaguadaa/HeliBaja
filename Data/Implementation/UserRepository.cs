@@ -1,87 +1,102 @@
-﻿using Data.Contracts;
-using Domain.Model;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
+using Data.Contracts;
+using Domain.Model;
 
-namespace Data.Repositories
+namespace Data.Implementation
 {
     public class UserRepository : IUserRepository
     {
-        private readonly HeliBajaDBContext _dbContext;
+        private readonly HeliBajaDBContext _context;
 
-        public UserRepository(HeliBajaDBContext dbContext)
+        public UserRepository(HeliBajaDBContext context)
         {
-            _dbContext = dbContext;
+            _context = context;
         }
 
-        public int Add(User entity)
+        public int AddUser(User user)
         {
-            _dbContext.Users.Add(entity);
-            _dbContext.SaveChanges();
-            return entity.Id;
-        }
-
-        public bool AddUser(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(int id)
-        {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Id == id);
-            if (user == null) return false;
-            _dbContext.Users.Remove(user);
-            _dbContext.SaveChanges();
-            return true;
-        }
-
-        public bool DeleteUser(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User Get(int id)
-        {
-            return _dbContext.Users.FirstOrDefault(u => u.Id == id);
-        }
-
-        public List<User> GetAllUsers()
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetUserByEmail(string email)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetUserById(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Update(User entity)
-        {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Id == entity.Id);
-            if (user == null) return false;
-            user.Name = entity.Name;
-            user.APaterno = entity.APaterno;
-            user.AMaterno = entity.AMaterno;
-            user.Email = entity.Email;
-            user.Password = entity.Password;
-            user.PilotId = entity.PilotId;
-            user.ClientId = entity.ClientId;
-            _dbContext.SaveChanges();
-            return true;
+            _context.Users.Add(user);
+            return _context.SaveChanges();
         }
 
         public bool UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            var existingUser = _context.Users.Find(user.Id);
+            if (existingUser == null)
+                return false;
+
+            existingUser.Name = user.Name;
+            existingUser.APaterno = user.APaterno;
+            existingUser.AMaterno = user.AMaterno;
+            existingUser.Email = user.Email;
+            existingUser.Password = user.Password;
+            existingUser.PilotId = user.PilotId;
+            existingUser.ClientId = user.ClientId;
+
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool DeleteUser(int userId)
+        {
+            var user = _context.Users.Find(userId);
+            if (user == null)
+                return false;
+
+            _context.Users.Remove(user);
+            return _context.SaveChanges() > 0;
+        }
+
+        public User GetUserById(int userId)
+        {
+            return _context.Users.Find(userId);
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email == email);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return _context.Users.ToList();
+        }
+
+        public List<Booking> GetUserBookings(int userId)
+        {
+            return _context.Bookings.Where(b => b.Id_Client == userId).ToList();
+        }
+
+        public List<Flight> GetAvailableFlights()
+        {
+            return _context.Flights.ToList();
+        }
+
+        public bool BookFlight(int userId, int flightId)
+        {
+            var user = _context.Users.Find(userId);
+            var flight = _context.Flights.Find(flightId);
+            if (user == null || flight == null)
+                return false;
+
+            var booking = new Booking
+            {
+                Id_Client = userId,
+                Id_Flight = flightId
+            };
+
+            _context.Bookings.Add(booking);
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool CancelBooking(int bookingId)
+        {
+            var booking = _context.Bookings.Find(bookingId);
+            if (booking == null)
+                return false;
+
+            _context.Bookings.Remove(booking);
+            return _context.SaveChanges() > 0;
         }
     }
 }
