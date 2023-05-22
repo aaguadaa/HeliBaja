@@ -15,12 +15,27 @@ namespace Data.Implementation
             throw new NotImplementedException();
         }
 
+        public bool AddAdminBooking(Booking booking)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Delete(int id)
         {
             throw new NotImplementedException();
         }
 
+        public bool DeleteAdminBooking(int bookingId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Booking Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Booking> GetAdminBookings()
         {
             throw new NotImplementedException();
         }
@@ -36,6 +51,11 @@ namespace Data.Implementation
         }
 
         public bool Update(Booking entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateAdminBooking(Booking booking)
         {
             throw new NotImplementedException();
         }

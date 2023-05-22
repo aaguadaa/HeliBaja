@@ -1,10 +1,8 @@
 ﻿using Data.Contracts;
 using Domain.Model;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Data.Repositories
@@ -57,7 +55,6 @@ namespace Data.Repositories
             return flights;
         }
 
-
         public bool AddFlightToPilot(int flightId, int pilotId)
         {
             var pilot = _dbContext.Pilots.Find(pilotId);
@@ -84,24 +81,35 @@ namespace Data.Repositories
             return true;
         }
 
-        int IGenericRepository<Pilots>.Add(Pilots entity)
+        public int Add(Pilots entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Pilots.Add(entity);
+            _dbContext.SaveChanges();
+            return entity.Id_Pilot;
         }
 
         public Pilots Get(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Pilots.FirstOrDefault(p => p.Id_Pilot == id);
         }
 
         bool IGenericRepository<Pilots>.Update(Pilots entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+            return true;
         }
 
         bool IGenericRepository<Pilots>.Delete(int id)
         {
-            throw new NotImplementedException();
+            var pilot = _dbContext.Pilots.FirstOrDefault(p => p.Id_Pilot == id);
+            if (pilot != null)
+            {
+                _dbContext.Pilots.Remove(pilot);
+                _dbContext.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

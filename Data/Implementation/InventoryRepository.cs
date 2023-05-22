@@ -15,12 +15,32 @@ namespace Data.Implementation
             throw new NotImplementedException();
         }
 
+        public bool AddAdminInventory(Inventory item)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Delete(int id)
         {
             throw new NotImplementedException();
         }
 
+        public bool DeleteAdminInventory(int itemId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Inventory Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Inventory> GetAdminInventory()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Inventory GetAdminInventoryById(int itemId)
         {
             throw new NotImplementedException();
         }
@@ -61,6 +81,11 @@ namespace Data.Implementation
         }
 
         public bool Update(Inventory entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateAdminInventory(Inventory item)
         {
             throw new NotImplementedException();
         }
