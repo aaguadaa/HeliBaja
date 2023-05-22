@@ -10,6 +10,10 @@ namespace Data.Implementation
 {
     public class AgendaRepository : IAgendaRepository
     {
+        public int Add(Agenda entity)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool AddAdminAgenda(Agenda entry)
         {
