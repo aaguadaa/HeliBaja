@@ -3,7 +3,7 @@ using Business.Contracts;
 using System.Collections.Generic;
 using System.Web.Http;
 
-namespace YourNamespace.Controllers
+namespace HeliBaja.Controllers
 {
     public class AdminController : ApiController
     {

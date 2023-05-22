@@ -1,10 +1,9 @@
 ﻿using Business.Contracts;
 using Domain.Model;
-using System;
 using System.Collections.Generic;
 using System.Web.Http;
 
-namespace YourNamespace.Controllers
+namespace HeliBaja.Controllers
 {
     public class UserController : ApiController
     {
@@ -15,84 +14,179 @@ namespace YourNamespace.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        public IHttpActionResult GetAllUsers()
-        {
-            try
-            {
-                List<Users> users = _userService.GetAllUsers();
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                // Manejar el error adecuadamente
-                return InternalServerError(ex);
-            }
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetUserById(int id)
-        {
-            try
-            {
-                Users user = _userService.GetUserById(id);
-                if (user == null)
-                    return NotFound();
-
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                // Manejar el error adecuadamente
-                return InternalServerError(ex);
-            }
-        }
-
         [HttpPost]
         public IHttpActionResult AddUser(Users user)
         {
-            try
-            {
-                int userId = _userService.AddUser(user);
-                return Ok(userId);
-            }
-            catch (Exception ex)
-            {
-                // Manejar el error adecuadamente
-                return InternalServerError(ex);
-            }
+            int userId = _userService.AddUser(user);
+            return Ok(userId);
         }
 
         [HttpPut]
         public IHttpActionResult UpdateUser(Users user)
         {
-            try
+            bool success = _userService.UpdateUser(user);
+            if (success)
             {
-                bool updated = _userService.UpdateUser(user);
-                return Ok(updated);
+                return Ok();
             }
-            catch (Exception ex)
+            else
             {
-                // Manejar el error adecuadamente
-                return InternalServerError(ex);
+                return NotFound();
             }
         }
 
         [HttpDelete]
-        public IHttpActionResult DeleteUser(int id)
+        public IHttpActionResult DeleteUser(int userId)
         {
-            try
+            bool success = _userService.DeleteUser(userId);
+            if (success)
             {
-                bool deleted = _userService.DeleteUser(id);
-                return Ok(deleted);
+                return Ok();
             }
-            catch (Exception ex)
+            else
             {
-                // Manejar el error adecuadamente
-                return InternalServerError(ex);
+                return NotFound();
             }
         }
 
-        // Resto de los métodos del controlador
+        [HttpGet]
+        public IHttpActionResult GetUserById(int userId)
+        {
+            Users user = _userService.GetUserById(userId);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetUserByEmail(string email)
+        {
+            Users user = _userService.GetUserByEmail(email);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetAllUsers()
+        {
+            List<Users> users = _userService.GetAllUsers();
+            return Ok(users);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetUserBookings(int userId)
+        {
+            List<Booking> bookings = _userService.GetUserBookings(userId);
+            return Ok(bookings);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetAvailableFlights()
+        {
+            List<Flight> flights = _userService.GetAvailableFlights();
+            return Ok(flights);
+        }
+
+        [HttpPost]
+        public IHttpActionResult BookFlight(int userId, int flightId)
+        {
+            bool success = _userService.BookFlight(userId, flightId);
+            if (success)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete]
+        public IHttpActionResult CancelBooking(int bookingId)
+        {
+            bool success = _userService.CancelBooking(bookingId);
+            if (success)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetAdminUsers()
+        {
+            List<Users> adminUsers = _userService.GetAdminUsers();
+            return Ok(adminUsers);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetAdminUserById(int userId)
+        {
+            Users adminUser = _userService.GetAdminUserById(userId);
+            if (adminUser != null)
+            {
+                return Ok(adminUser);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult AddAdminUser(Users user)
+        {
+            bool success = _userService.AddAdminUser(user);
+            if (success)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        public IHttpActionResult UpdateAdminUser(Users user)
+        {
+            bool success = _userService.UpdateAdminUser(user);
+            if (success)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete]
+        public IHttpActionResult DeleteAdminUser(int userId)
+        {
+            bool success = _userService.DeleteAdminUser(userId);
+            if (success)
+            {
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }
