@@ -111,5 +111,45 @@ namespace Data.Repositories
             }
             return false;
         }
+
+        public async Task<IEnumerable<Pilots>> GetAllPilots()
+        {
+            return await _dbContext.Pilots.ToListAsync();
+        }
+
+        public async Task<Pilots> GetPilotById(int pilotId)
+        {
+            return await _dbContext.Pilots.FindAsync(pilotId);
+        }
+
+        public async Task<int> AddPilot(Pilots pilot)
+        {
+            _dbContext.Pilots.Add(pilot);
+            await _dbContext.SaveChangesAsync();
+            return pilot.Id_Pilot;
+        }
+
+        public async Task<bool> UpdatePilot(Pilots pilot)
+        {
+            if (!_dbContext.Pilots.Local.Any(p => p.Id_Pilot == pilot.Id_Pilot))
+            {
+                _dbContext.Pilots.Attach(pilot);
+            }
+            _dbContext.Entry(pilot).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeletePilot(int pilotId)
+        {
+            var pilot = await _dbContext.Pilots.FindAsync(pilotId);
+            if (pilot == null)
+            {
+                return false;
+            }
+            _dbContext.Pilots.Remove(pilot);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

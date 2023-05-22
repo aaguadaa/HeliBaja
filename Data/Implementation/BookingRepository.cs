@@ -96,5 +96,10 @@ namespace Data.Repositories
             _dbContext.SaveChanges();
             return true;
         }
+
+        public IEnumerable<Booking> GetAll()
+        {
+            return _dbContext.Bookings.ToList();
+        }
     }
 }

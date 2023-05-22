@@ -17,27 +17,27 @@ namespace Business.Services
 
         public async Task<IEnumerable<Pilots>> GetAllPilots()
         {
-            return await _pilotRepository.GetAll();
+            return await _pilotRepository.GetAllPilots();
         }
 
         public async Task<Pilots> GetPilotById(int pilotId)
         {
-            return await _pilotRepository.GetById(pilotId);
+            return await _pilotRepository.GetPilotById(pilotId);
         }
 
         public async Task<int> AddPilot(Pilots pilot)
         {
-            return await _pilotRepository.Add(pilot);
+            return await _pilotRepository.AddPilot(pilot);
         }
 
         public async Task<bool> UpdatePilot(Pilots pilot)
         {
-            return await _pilotRepository.Update(pilot);
+            return await _pilotRepository.UpdatePilot(pilot);
         }
 
         public async Task<bool> DeletePilot(int pilotId)
         {
-            return await _pilotRepository.Delete(pilotId);
+            return await _pilotRepository.DeletePilot(pilotId);
         }
 
         public List<Flight> GetFlights(int pilotId)

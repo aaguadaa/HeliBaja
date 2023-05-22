@@ -2,6 +2,7 @@
 using Domain.Model;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
@@ -63,6 +64,88 @@ namespace Data.Repositories
         {
             var bookings = _dbContext.Bookings.Where(b => b.Id_Client == clientId).ToList();
             return bookings;
+        }
+
+        public async Task<IEnumerable<Clients>> GetAllAsync()
+        {
+            return await Task.FromResult(GetAll());
+        }
+
+        public async Task<Clients> GetAsync(int id)
+        {
+            return await Task.FromResult(Get(id));
+        }
+
+        public async Task<int> AddAsync(Clients entity)
+        {
+            return await Task.Run(() => Add(entity));
+        }
+
+        public async Task<bool> UpdateAsync(Clients entity)
+        {
+            return await Task.Run(() => Update(entity));
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            return await Task.Run(() => Delete(id));
+        }
+
+        public bool AddBookingToClient(int bookingId, int clientId)
+        {
+            var client = _dbContext.Clients.FirstOrDefault(c => c.Id_Client == clientId);
+            var booking = _dbContext.Bookings.FirstOrDefault(b => b.Id_Booking == bookingId);
+
+            if (client == null || booking == null)
+            {
+                return false;
+            }
+
+            client.Bookings.Add(booking);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
+
+        public bool RemoveBookingFromClient(int bookingId, int clientId)
+        {
+            var client = _dbContext.Clients.FirstOrDefault(c => c.Id_Client == clientId);
+            var booking = _dbContext.Bookings.FirstOrDefault(b => b.Id_Booking == bookingId);
+
+            if (client == null || booking == null)
+            {
+                return false;
+            }
+
+            client.Bookings.Remove(booking);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
+
+        Task<IEnumerable<Clients>> IClientRepository.GetAll()
+        {
+            return GetAllAsync();
+        }
+
+        Task<Clients> IClientRepository.Get(int id)
+        {
+            return GetAsync(id);
+        }
+
+        Task<int> IClientRepository.Add(Clients entity)
+        {
+            return AddAsync(entity);
+        }
+
+        Task<bool> IClientRepository.Update(Clients entity)
+        {
+            return UpdateAsync(entity);
+        }
+
+        Task<bool> IClientRepository.Delete(int id)
+        {
+            return DeleteAsync(id);
         }
     }
 }
