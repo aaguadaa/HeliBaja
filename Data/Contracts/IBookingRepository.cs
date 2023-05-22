@@ -12,6 +12,7 @@ namespace Data.Contracts
         bool AddAdminBooking(Booking booking);
         bool DeleteAdminBooking(int bookingId);
         List<Booking> GetAdminBookings();
+        IEnumerable<Booking> GetAll();
         List<Booking> GetBookingsByClient(int Id_Client);
         List<Booking> GetBookingsByFlight(int Id_Flight);
         bool UpdateAdminBooking(Booking booking);
