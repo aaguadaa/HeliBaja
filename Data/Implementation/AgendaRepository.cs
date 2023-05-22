@@ -15,6 +15,11 @@ namespace Data.Implementation
             throw new NotImplementedException();
         }
 
+        public bool AddAdminAgenda(Agenda entry)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool AddFlight(int Id_Agenda, int Id_Flight)
         {
             throw new NotImplementedException();
@@ -25,7 +30,22 @@ namespace Data.Implementation
             throw new NotImplementedException();
         }
 
+        public bool DeleteAdminAgenda(int entryId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Agenda Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Agenda> GetAdminAgenda()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Agenda GetAdminAgendaById(int entryId)
         {
             throw new NotImplementedException();
         }
@@ -41,6 +61,11 @@ namespace Data.Implementation
         }
 
         public bool Update(Agenda entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateAdminAgenda(Agenda entry)
         {
             throw new NotImplementedException();
         }
