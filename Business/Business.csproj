@@ -70,6 +70,7 @@
     <Compile Include="Contracts\IBookingService.cs" />
     <Compile Include="Contracts\IClientService.cs" />
     <Compile Include="Contracts\IFlightService.cs" />
+    <Compile Include="Contracts\IInventoryService.cs" />
     <Compile Include="Contracts\IPilotService.cs" />
     <Compile Include="Contracts\IUserService.cs" />
     <Compile Include="Implementation\AdminService.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Implementation\BookingService.cs" />
     <Compile Include="Implementation\ClientService.cs" />
     <Compile Include="Implementation\FlightService.cs" />
+    <Compile Include="Implementation\InventoryService.cs" />
     <Compile Include="Implementation\PilotService.cs" />
     <Compile Include="Implementation\UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

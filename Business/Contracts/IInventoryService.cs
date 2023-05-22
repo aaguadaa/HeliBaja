@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Contracts
+namespace Business.Contracts
 {
-    public interface IInventoryRepository : IGenericRepository<Inventory>
+    public interface IInventoryService
     {
         List<Inventory> GetInventoriesByToolName(string toolName);
         bool UpdateInventoryQuantity(int inventoryId, int newQuantity);
@@ -22,5 +22,8 @@ namespace Data.Contracts
         bool AddAdminInventory(Inventory item);
         Inventory GetAdminInventoryById(int itemId);
         bool DeleteAdminInventory(int itemId);
+        int AddInventory(Inventory inventory);
+        bool UpdateInventory(Inventory inventory);
+        bool DeleteInventory(int inventoryId);
     }
 }
