@@ -63,5 +63,30 @@ namespace Business.Implementation
         {
             return _userRepository.CancelBooking(bookingId);
         }
+
+        public List<Users> GetAdminUsers()
+        {
+            return _userRepository.GetAdminUsers();
+        }
+
+        public Users GetAdminUserById(int userId)
+        {
+            return _userRepository.GetAdminUserById(userId);
+        }
+
+        public bool AddAdminUser(Users user)
+        {
+            return _userRepository.AddAdminUser(user);
+        }
+
+        public bool UpdateAdminUser(Users user)
+        {
+            return _userRepository.UpdateAdminUser(user);
+        }
+
+        public bool DeleteAdminUser(int userId)
+        {
+            return _userRepository.DeleteAdminUser(userId);
+        }
     }
 }

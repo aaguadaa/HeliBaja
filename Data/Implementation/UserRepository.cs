@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Data.Contracts;
 using Domain.Model;
@@ -97,6 +98,40 @@ namespace Data.Implementation
 
             _context.Bookings.Remove(booking);
             return _context.SaveChanges() > 0;
+        }
+
+
+        public List<Users> GetAdminUsers()
+        {
+            return _context.Users.Where(u => u.PilotId == null && u.ClientId == null).ToList();
+        }
+
+        public Users GetAdminUserById(int userId)
+        {
+            return _context.Users.FirstOrDefault(u => u.PilotId == null && u.ClientId == null && u.Id == userId);
+        }
+
+        public bool AddAdminUser(Users user)
+        {
+            _context.Users.Add(user);
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool UpdateAdminUser(Users user)
+        {
+            _context.Entry(user).State = EntityState.Modified;
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool DeleteAdminUser(int userId)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.PilotId == null && u.ClientId == null && u.Id == userId);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                return _context.SaveChanges() > 0;
+            }
+            return false;
         }
     }
 }

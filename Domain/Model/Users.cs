@@ -25,5 +25,6 @@ namespace Domain.Model
         public virtual Clients Cliente { get; set; }
 
         public virtual Pilots Piloto { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
