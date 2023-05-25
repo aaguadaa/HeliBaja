@@ -3,9 +3,6 @@ using Data.Contracts;
 using Domain.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Implementation
 {
@@ -26,11 +23,6 @@ namespace Business.Implementation
         public bool UpdateInventoryQuantity(int inventoryId, int newQuantity)
         {
             return _inventoryRepository.UpdateInventoryQuantity(inventoryId, newQuantity);
-        }
-
-        public List<Inventory> GetAllInventory()
-        {
-            return _inventoryRepository.GetAllInventory();
         }
 
         public List<Inventory> GetAvailableInventory()
@@ -58,44 +50,44 @@ namespace Business.Implementation
             return _inventoryRepository.GetInventoryByDateRange(startDate, endDate);
         }
 
-        public List<Inventory> GetAdminInventory()
+        public bool AddTool(Tools tool)
         {
-            return _inventoryRepository.GetAdminInventory();
+            return _inventoryRepository.AddTool(tool);
         }
 
-        public bool UpdateAdminInventory(Inventory item)
+        public Tools GetToolById(int toolId)
         {
-            return _inventoryRepository.UpdateAdminInventory(item);
+            return _inventoryRepository.GetToolById(toolId);
         }
 
-        public bool AddAdminInventory(Inventory item)
+        public bool UpdateTool(Tools tool)
         {
-            return _inventoryRepository.AddAdminInventory(item);
-        }
-
-        public Inventory GetAdminInventoryById(int itemId)
-        {
-            return _inventoryRepository.GetAdminInventoryById(itemId);
-        }
-
-        public bool DeleteAdminInventory(int itemId)
-        {
-            return _inventoryRepository.DeleteAdminInventory(itemId);
+            return _inventoryRepository.UpdateTool(tool);
         }
 
         public int AddInventory(Inventory inventory)
         {
-            return _inventoryRepository.Add(inventory);
+            throw new NotImplementedException();
+        }
+
+        public Inventory GetInventoryById(int inventoryId)
+        {
+            throw new NotImplementedException();
         }
 
         public bool UpdateInventory(Inventory inventory)
         {
-            return _inventoryRepository.Update(inventory);
+            throw new NotImplementedException();
         }
 
         public bool DeleteInventory(int inventoryId)
         {
-            return _inventoryRepository.Delete(inventoryId);
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteTool(int toolId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

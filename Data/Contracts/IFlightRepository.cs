@@ -9,14 +9,14 @@ namespace Data.Contracts
 {
     public interface IFlightRepository : IGenericRepository<Flight>
     {
-        bool AddFlightToPilot(int Id_Flight, int Id_Pilot);
-        bool RemoveFlightFromPilot(int Id_Flight, int Id_Pilot);
-        List<Flight> GetFlights();
-        bool DeleteFlight(int Id_Flight);
-        bool UpdateFlight(Flight flight);
+        Task<IEnumerable<Flight>> GetFlightsByPilotId(int pilotId);
+        Task<IEnumerable<Flight>> GetFlightsByDate(DateTime date);
+        Task<IEnumerable<Flight>> GetFlightsByDateRange(DateTime startDate, DateTime endDate);
+        Task<IEnumerable<Flight>> GetFlightsByStatus(string status);
+        Task<IEnumerable<Flight>> GetFlightsByBookingId(int bookingId);
         List<Flight> GetAdminFlights();
-        bool AddAdminFlight(Flight flight);
-        bool UpdateAdminFlight(Flight flight);
-        bool DeleteAdminFlight(int flightId);
+        List<Flight> GetFlights();
+        List<Flight> GetAllFlights();
+        List<Flight> GetAvailableFlights();
     }
 }

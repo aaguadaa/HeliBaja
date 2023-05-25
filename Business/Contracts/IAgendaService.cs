@@ -5,12 +5,12 @@ namespace Business.Contracts
 {
     public interface IAgendaService
     {
-        int CreateAgenda(Agenda agenda);
+        int AddAgenda(Agenda agenda);
         bool UpdateAgenda(Agenda agenda);
         bool DeleteAgenda(int agendaId);
         Agenda GetAgendaById(int agendaId);
-        List<Agenda> GetAllAgendas();
-        bool AddFlightToAgenda(int agendaId, int flightId);
-        bool RemoveFlightFromAgenda(int agendaId, int flightId);
+        IEnumerable<Agenda> GetAllAgendas();
+        IEnumerable<Agenda> GetAgendasByPilotId(int pilotId);
+        IEnumerable<Agenda> GetAgendasByFlightId(int flightId);
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Model
 {
@@ -13,9 +9,16 @@ namespace Domain.Model
         public int Id_Booking { get; set; }
         public int Id_Client { get; set; }
         public int Id_Flight { get; set; }
+        public DateTime CreatedDate { get; set; }  // Fecha de creación de la reserva
+        public DateTime TourDate { get; set; }  // Fecha del tour
+        public string PaymentMethod { get; set; }  // Método de pago de la reserva
+        public string PaymentStatus { get; set; }  // Estado de pago de la reserva
+        public string BookingStatus { get; set; }  // Estado de la reserva
 
-        // Propiedad de navegación
-        public Clients Clients { get; set; }
-        public Flight Flights { get; set; }
+        // Relación con el cliente
+        public virtual Clients Client { get; set; }
+
+        // Relación con el vuelo
+        public virtual Flight Flight { get; set; }
     }
 }

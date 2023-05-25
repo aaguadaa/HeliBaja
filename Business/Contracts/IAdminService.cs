@@ -5,50 +5,40 @@ namespace Business.Contracts
 {
     public interface IAdminService
     {
-        // Admin
-
-        List<Admin> GetAdmins();
+        // Métodos para Admin
         Admin GetAdminById(int adminId);
-        bool AddAdmin(Admin admin);
+        int AddAdmin(Admin admin);
         bool UpdateAdmin(Admin admin);
         bool DeleteAdmin(int adminId);
 
-        // Booking
-
+        // Métodos para Booking
         List<Booking> GetAdminBookings();
-        bool AddAdminBooking(Booking booking);
         bool UpdateAdminBooking(Booking booking);
-        bool DeleteAdminBooking(int bookingId);
 
-        // Flight
-
+        // Métodos para Flight
         List<Flight> GetAdminFlights();
+        Flight GetAdminFlightById(int flightId);
         bool AddAdminFlight(Flight flight);
         bool UpdateAdminFlight(Flight flight);
         bool DeleteAdminFlight(int flightId);
 
-        // User
-
+        // Métodos para User
         List<Users> GetAdminUsers();
-        Users GetAdminUserById(int userId);
-        bool AddAdminUser(Users user);
-        bool UpdateAdminUser(Users user);
-        bool DeleteAdminUser(int userId);
 
-        // Inventory
-
+        // Métodos para Inventory
         List<Inventory> GetAdminInventory();
-        Inventory GetAdminInventoryById(int itemId);
-        bool AddAdminInventory(Inventory item);
-        bool UpdateAdminInventory(Inventory item);
-        bool DeleteAdminInventory(int itemId);
 
-        // Agenda
+        // Métodos para Agenda
+        int AddAgenda(Agenda agenda);
+        bool UpdateAgenda(Agenda agenda);
+        bool DeleteAgenda(int agendaId);
+        Agenda GetAgendaById(int agendaId);
+        IEnumerable<Agenda> GetAgendasByPilotId(int pilotId);
+        IEnumerable<Agenda> GetAgendasByFlightId(int flightId);
 
-        List<Agenda> GetAdminAgenda();
-        Agenda GetAdminAgendaById(int entryId);
-        bool AddAdminAgenda(Agenda entry);
-        bool UpdateAdminAgenda(Agenda entry);
-        bool DeleteAdminAgenda(int entryId);
+        // Métodos para Pilot
+        IEnumerable<Pilots> GetPilots();
+        Pilots GetPilotById(int pilotId);
+        bool AssignFlightToPilot(int pilotId, int flightId);
     }
 }

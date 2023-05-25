@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace HeliBaja.Controllers
 {
-    public class UserController : Controller
+    public class ToolsController : Controller
     {
-        // GET: User
+        // GET: Tools
         public ActionResult Index()
         {
             return View();

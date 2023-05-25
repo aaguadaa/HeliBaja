@@ -141,6 +141,7 @@
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\PilotController.cs" />
+    <Compile Include="Controllers\ToolsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -166,6 +167,7 @@
     <Folder Include="Views\Flight\" />
     <Folder Include="Views\Inventory\" />
     <Folder Include="Views\Pilot\" />
+    <Folder Include="Views\Tools\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

@@ -5,10 +5,6 @@ namespace Business.Contracts
 {
     public interface IUserService
     {
-        int AddUser(Users user);
-        bool UpdateUser(Users user);
-        bool DeleteUser(int userId);
-        Users GetUserById(int userId);
         Users GetUserByEmail(string email);
         List<Users> GetAllUsers();
         List<Booking> GetUserBookings(int userId);

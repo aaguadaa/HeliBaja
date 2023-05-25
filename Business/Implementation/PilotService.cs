@@ -2,9 +2,8 @@
 using Data.Contracts;
 using Domain.Model;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Business.Services
+namespace Business.Implementation
 {
     public class PilotService : IPilotService
     {
@@ -15,44 +14,34 @@ namespace Business.Services
             _pilotRepository = pilotRepository;
         }
 
-        public async Task<IEnumerable<Pilots>> GetAllPilots()
+        public int AddPilot(Pilots pilot)
         {
-            return await _pilotRepository.GetAllPilots();
+            return _pilotRepository.Add(pilot);
         }
 
-        public async Task<Pilots> GetPilotById(int pilotId)
+        public bool DeletePilot(int pilotId)
         {
-            return await _pilotRepository.GetPilotById(pilotId);
+            return _pilotRepository.Delete(pilotId);
         }
 
-        public async Task<int> AddPilot(Pilots pilot)
+        public IEnumerable<Agenda> GetAgendaByPilotId(int pilotId)
         {
-            return await _pilotRepository.AddPilot(pilot);
+            return _pilotRepository.GetAgendaByPilotId(pilotId);
         }
 
-        public async Task<bool> UpdatePilot(Pilots pilot)
+        public Pilots GetPilotById(int pilotId)
         {
-            return await _pilotRepository.UpdatePilot(pilot);
+            return _pilotRepository.GetPilotById(pilotId);
         }
 
-        public async Task<bool> DeletePilot(int pilotId)
+        public IEnumerable<Pilots> GetPilots()
         {
-            return await _pilotRepository.DeletePilot(pilotId);
+            return _pilotRepository.GetPilots();
         }
 
-        public List<Flight> GetFlights(int pilotId)
+        public bool UpdatePilot(Pilots pilot)
         {
-            return _pilotRepository.GetFlights(pilotId);
-        }
-
-        public bool AddFlightToPilot(int flightId, int pilotId)
-        {
-            return _pilotRepository.AddFlightToPilot(flightId, pilotId);
-        }
-
-        public bool RemoveFlightFromPilot(int flightId, int pilotId)
-        {
-            return _pilotRepository.RemoveFlightFromPilot(flightId, pilotId);
+            return _pilotRepository.Update(pilot);
         }
     }
 }

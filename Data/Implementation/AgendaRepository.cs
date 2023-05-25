@@ -3,125 +3,68 @@ using Domain.Model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Data.Implementation
+namespace Data.Repositories
 {
     public class AgendaRepository : IAgendaRepository
     {
-        private readonly HeliBajaDBContext _context;
+        private readonly HeliBajaDBContext _dbContext;
 
-        public AgendaRepository(HeliBajaDBContext context)
+        public AgendaRepository(HeliBajaDBContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
-        public int Add(Agenda entity)
+        public int Add(Agenda agenda)
         {
-            _context.Agendas.Add(entity);
-            _context.SaveChanges();
-            return entity.Id_Agenda;
+            _dbContext.Agendas.Add(agenda);
+            _dbContext.SaveChanges();
+            return agenda.Id_Agenda;
         }
 
-        public bool AddAdminAgenda(Agenda entry)
+        public bool Update(Agenda agenda)
         {
-            _context.Agendas.Add(entry);
-            return _context.SaveChanges() > 0;
+            var existingAgenda = _dbContext.Agendas.FirstOrDefault(a => a.Id_Agenda == agenda.Id_Agenda);
+            if (existingAgenda == null)
+                return false;
+
+            existingAgenda.Id_Pilot = agenda.Id_Pilot;
+            existingAgenda.Id_Flight = agenda.Id_Flight;
+            existingAgenda.Date = agenda.Date;
+            existingAgenda.Itinerary = agenda.Itinerary;
+
+            _dbContext.SaveChanges();
+            return true;
         }
 
-        public bool AddFlight(int Id_Agenda, int Id_Flight)
+        public bool Delete(int agendaId)
         {
-            var agenda = _context.Agendas.FirstOrDefault(a => a.Id_Agenda == Id_Agenda);
-            if (agenda != null)
-            {
-                var flight = _context.Flights.FirstOrDefault(f => f.Id_Flight == Id_Flight);
-                if (flight != null)
-                {
-                    agenda.Flights.Add(flight);
-                    return _context.SaveChanges() > 0;
-                }
-            }
-            return false;
+            var agenda = _dbContext.Agendas.FirstOrDefault(a => a.Id_Agenda == agendaId);
+            if (agenda == null)
+                return false;
+
+            _dbContext.Agendas.Remove(agenda);
+            _dbContext.SaveChanges();
+            return true;
         }
 
-        public bool Delete(int id)
+        public Agenda Get(int agendaId)
         {
-            var agenda = _context.Agendas.FirstOrDefault(a => a.Id_Agenda == id);
-            if (agenda != null)
-            {
-                _context.Agendas.Remove(agenda);
-                return _context.SaveChanges() > 0;
-            }
-            return false;
+            return _dbContext.Agendas.FirstOrDefault(a => a.Id_Agenda == agendaId);
         }
 
-        public bool DeleteAdminAgenda(int entryId)
+        public IEnumerable<Agenda> GetAll()
         {
-            var agenda = _context.Agendas.FirstOrDefault(a => a.Id_Agenda == entryId && a.Flight == null);
-            if (agenda != null)
-            {
-                _context.Agendas.Remove(agenda);
-                return _context.SaveChanges() > 0;
-            }
-            return false;
+            return _dbContext.Agendas.ToList();
         }
 
-        public Agenda Get(int id)
+        public IEnumerable<Agenda> GetAgendasByPilotId(int pilotId)
         {
-            return _context.Agendas.FirstOrDefault(a => a.Id_Agenda == id);
+            return _dbContext.Agendas.Where(a => a.Id_Pilot == pilotId).ToList();
         }
 
-        public List<Agenda> GetAdminAgenda()
+        public IEnumerable<Agenda> GetAgendasByFlightId(int flightId)
         {
-            return _context.Agendas.Where(a => a.Flight == null).ToList();
-        }
-
-        public Agenda GetAdminAgendaById(int entryId)
-        {
-            return _context.Agendas.FirstOrDefault(a => a.Id_Agenda == entryId && a.Flight == null);
-        }
-
-        public List<Flight> GetFlights(int Id_Agenda)
-        {
-            var agenda = _context.Agendas.FirstOrDefault(a => a.Id_Agenda == Id_Agenda);
-            return agenda?.Flights.ToList();
-        }
-
-        public bool RemoveFlight(int Id_Agenda, int Id_Flight)
-        {
-            var agenda = _context.Agendas.FirstOrDefault(a => a.Id_Agenda == Id_Agenda);
-            if (agenda != null)
-            {
-                var flight = agenda.Flights.FirstOrDefault(f => f.Id_Flight == Id_Flight);
-                if (flight != null)
-                {
-                    agenda.Flights.Remove(flight);
-                    return _context.SaveChanges() > 0;
-                }
-            }
-            return false;
-        }
-
-        public bool Update(Agenda entity)
-        {
-            var agenda = _context.Agendas.FirstOrDefault(a => a.Id_Agenda == entity.Id_Agenda);
-            if (agenda != null)
-            {
-                agenda.Fecha = entity.Fecha;
-                agenda.Description = entity.Description;
-                return _context.SaveChanges() > 0;
-            }
-            return false;
-        }
-
-        public bool UpdateAdminAgenda(Agenda entry)
-        {
-            var agenda = _context.Agendas.FirstOrDefault(a => a.Id_Agenda == entry.Id_Agenda && a.Flight == null);
-            if (agenda != null)
-            {
-                agenda.Fecha = entry.Fecha;
-                agenda.Description = entry.Description;
-                return _context.SaveChanges() > 0;
-            }
-            return false;
+            return _dbContext.Agendas.Where(a => a.Id_Flight == flightId).ToList();
         }
     }
 }

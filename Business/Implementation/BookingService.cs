@@ -2,7 +2,7 @@
 using Data.Contracts;
 using Domain.Model;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 
 namespace Business.Implementation
 {
@@ -15,39 +15,45 @@ namespace Business.Implementation
             _bookingRepository = bookingRepository;
         }
 
-        public async Task<IEnumerable<Booking>> GetAllBookings()
+        public int AddBooking(Booking booking)
         {
-            return await Task.Run(() => _bookingRepository.GetAll());
+            int bookingId = _bookingRepository.Add(booking);
+            return bookingId;
         }
 
-        public async Task<Booking> GetBookingById(int bookingId)
+        public bool DeleteBooking(int bookingId)
         {
-            return await Task.Run(() => _bookingRepository.Get(bookingId));
+            bool isDeleted = _bookingRepository.Delete(bookingId);
+            return isDeleted;
         }
 
-        public async Task<int> AddBooking(Booking booking)
+        public List<Booking> GetAllBookings()
         {
-            return await Task.Run(() => _bookingRepository.Add(booking));
+            return _bookingRepository.GetAllBookings().ToList();
         }
 
-        public async Task<bool> UpdateBooking(Booking booking)
+        public Booking GetBookingById(int bookingId)
         {
-            return await Task.Run(() => _bookingRepository.Update(booking));
+            Booking booking = _bookingRepository.Get(bookingId);
+            return booking;
         }
 
-        public async Task<bool> DeleteBooking(int bookingId)
+        public List<Booking> GetBookingsByClientId(int clientId)
         {
-            return await Task.Run(() => _bookingRepository.Delete(bookingId));
+            List<Booking> bookings = _bookingRepository.GetBookingsByClientId(clientId).ToList();
+            return bookings;
         }
 
-        public List<Booking> GetBookingsByClient(int clientId)
+        public List<Booking> GetBookingsByFlightId(int flightId)
         {
-            return _bookingRepository.GetBookingsByClient(clientId);
+            List<Booking> bookings = _bookingRepository.GetBookingsByFlightId(flightId).ToList();
+            return bookings;
         }
 
-        public List<Booking> GetBookingsByFlight(int flightId)
+        public bool UpdateBooking(Booking booking)
         {
-            return _bookingRepository.GetBookingsByFlight(flightId);
+            bool isUpdated = _bookingRepository.Update(booking);
+            return isUpdated;
         }
     }
 }

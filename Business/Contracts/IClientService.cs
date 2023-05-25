@@ -6,13 +6,21 @@ namespace Business.Contracts
 {
     public interface IClientService
     {
-        Task<IEnumerable<Clients>> GetAllClients();
-        Task<Clients> GetClientById(int clientId);
-        Task<int> AddClient(Clients client);
-        Task<bool> UpdateClient(Clients client);
-        Task<bool> DeleteClient(int clientId);
-        List<Booking> GetBookings(int clientId);
-        bool AddBookingToClient(int bookingId, int clientId);
-        bool RemoveBookingFromClient(int bookingId, int clientId);
+        int AddClient(Clients client);
+        bool DeleteClient(int clientId);
+        Clients GetClientById(int clientId);
+        Clients GetClientByEmail(string email);
+        Clients GetClientByCredentials(string email, string password);
+        bool UpdateClient(Clients client);
+        List<Flight> GetAvailableFlights();
+        Flight GetFlightDetails(int flightId);
+        bool CreateBooking(Booking booking);
+        bool UpdateBooking(Booking booking);
+        bool DeleteBooking(int bookingId);
+        bool CancelBooking(int bookingId);
+        List<Booking> GetAllBookingsByClientId(int clientId);
+        bool Login(string email, string password);
+        void Logout();
+        bool RecoverAccount(string email);
     }
 }

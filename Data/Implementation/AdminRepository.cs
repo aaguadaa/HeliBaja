@@ -13,6 +13,7 @@ namespace Data.Repositories
         private readonly List<Users> _users;
         private readonly List<Inventory> _inventory;
         private readonly List<Agenda> _agenda;
+        private readonly List<Pilots> _pilot;
 
         public AdminRepository()
         {
@@ -23,50 +24,39 @@ namespace Data.Repositories
             _users = new List<Users>();
             _inventory = new List<Inventory>();
             _agenda = new List<Agenda>();
+            _pilot = new List<Pilots>();
         }
 
         // Implementación de métodos para Admin
-
-        public List<Admin> GetAdmins()
-        {
-            return _admins;
-        }
-
         public Admin GetAdminById(int adminId)
         {
             return _admins.FirstOrDefault(a => a.Id == adminId);
         }
-
-        public bool AddAdmin(Admin admin)
+        public int Add(Admin entity)
         {
-            var existingAdmin = _admins.FirstOrDefault(a => a.Id == admin.Id);
-            if (existingAdmin != null)
-            {
-                return false; // El admin ya existe, no se puede agregar
-            }
-
-            _admins.Add(admin);
-            return true;
+            _admins.Add(entity);
+            return entity.Id;
         }
-
-        public bool UpdateAdmin(Admin admin)
+        public Admin Get(int id)
         {
-            var existingAdmin = _admins.FirstOrDefault(a => a.Id == admin.Id);
+            return _admins.FirstOrDefault(a => a.Id == id);
+        }
+        public bool Update(Admin entity)
+        {
+            var existingAdmin = _admins.FirstOrDefault(a => a.Id == entity.Id);
             if (existingAdmin == null)
             {
                 return false; // El admin no existe, no se puede actualizar
             }
 
-            existingAdmin.Name = admin.Name;
-            existingAdmin.Email = admin.Email;
-            // Actualizar otros campos según sea necesario
+            existingAdmin.Name = entity.Name;
+            existingAdmin.Email = entity.Email;
 
             return true;
         }
-
-        public bool DeleteAdmin(int adminId)
+        public bool Delete(int id)
         {
-            var admin = _admins.FirstOrDefault(a => a.Id == adminId);
+            var admin = _admins.FirstOrDefault(a => a.Id == id);
             if (admin == null)
             {
                 return false; // El admin no existe, no se puede eliminar
@@ -75,7 +65,6 @@ namespace Data.Repositories
             _admins.Remove(admin);
             return true;
         }
-
         // Implementación de métodos para Booking
 
         public List<Booking> GetAdminBookings()
@@ -83,36 +72,16 @@ namespace Data.Repositories
             return _bookings;
         }
 
-        public bool AddAdminBooking(Booking booking)
-        {
-            _bookings.Add(booking);
-            return true;
-        }
-
         public bool UpdateAdminBooking(Booking booking)
         {
             var existingBooking = _bookings.FirstOrDefault(b => b.Id_Booking == booking.Id_Booking);
             if (existingBooking == null)
-            {
-                return false; // La reserva no existe, no se puede actualizar
-            }
+                return false;
 
-            existingBooking.Id_Client = booking.Id_Client;
-            existingBooking.Id_Flight = booking.Id_Flight;
-            // Actualizar otros campos según sea necesario
+            existingBooking.PaymentMethod = booking.PaymentMethod;
+            existingBooking.PaymentStatus = booking.PaymentStatus;
+            existingBooking.BookingStatus = booking.BookingStatus;
 
-            return true;
-        }
-
-        public bool DeleteAdminBooking(int bookingId)
-        {
-            var booking = _bookings.FirstOrDefault(b => b.Id_Booking == bookingId);
-            if (booking == null)
-            {
-                return false; // La reserva no existe, no se puede eliminar
-            }
-
-            _bookings.Remove(booking);
             return true;
         }
 
@@ -121,6 +90,11 @@ namespace Data.Repositories
         public List<Flight> GetAdminFlights()
         {
             return _flights;
+        }
+
+        public Flight GetAdminFlightById(int flightId)
+        {
+            return _flights.FirstOrDefault(f => f.Id_Flight == flightId);
         }
 
         public bool AddAdminFlight(Flight flight)
@@ -132,30 +106,21 @@ namespace Data.Repositories
         public bool UpdateAdminFlight(Flight flight)
         {
             var existingFlight = _flights.FirstOrDefault(f => f.Id_Flight == flight.Id_Flight);
-            if (existingFlight != null)
-            {
-                existingFlight.NumeroVuelo = flight.NumeroVuelo;
-                existingFlight.Origen = flight.Origen;
-                existingFlight.Destino = flight.Destino;
-                existingFlight.HoraSalida = flight.HoraSalida;
-                existingFlight.HoraLlegada = flight.HoraLlegada;
-                existingFlight.Bookings = flight.Bookings;
-
-                return true;
-            }
-            else
-            {
+            if (existingFlight == null)
                 return false;
-            }
+
+            existingFlight.Id_Flight = flight.Id_Flight;
+            existingFlight.Destino = flight.Destino;
+            // Actualizar otros campos según sea necesario
+
+            return true;
         }
 
         public bool DeleteAdminFlight(int flightId)
         {
             var flight = _flights.FirstOrDefault(f => f.Id_Flight == flightId);
             if (flight == null)
-            {
-                return false; // El vuelo no existe, no se puede eliminar
-            }
+                return false;
 
             _flights.Remove(flight);
             return true;
@@ -168,44 +133,6 @@ namespace Data.Repositories
             return _users;
         }
 
-        public Users GetAdminUserById(int userId)
-        {
-            return _users.FirstOrDefault(u => u.Id == userId);
-        }
-
-        public bool AddAdminUser(Users user)
-        {
-            _users.Add(user);
-            return true;
-        }
-
-        public bool UpdateAdminUser(Users user)
-        {
-            var existingUser = _users.FirstOrDefault(u => u.Id == user.Id);
-            if (existingUser == null)
-            {
-                return false; // El usuario no existe, no se puede actualizar
-            }
-
-            existingUser.Name = user.Name;
-            existingUser.Email = user.Email;
-            // Actualizar otros campos según sea necesario
-
-            return true;
-        }
-
-        public bool DeleteAdminUser(int userId)
-        {
-            var user = _users.FirstOrDefault(u => u.Id == userId);
-            if (user == null)
-            {
-                return false; // El usuario no existe, no se puede eliminar
-            }
-
-            _users.Remove(user);
-            return true;
-        }
-
         // Implementación de métodos para Inventory
 
         public List<Inventory> GetAdminInventory()
@@ -213,127 +140,85 @@ namespace Data.Repositories
             return _inventory;
         }
 
-        public Inventory GetAdminInventoryById(int itemId)
-        {
-            return _inventory.FirstOrDefault(i => i.Id_Inventory == itemId);
-        }
-
-        public bool AddAdminInventory(Inventory item)
-        {
-            _inventory.Add(item);
-            return true;
-        }
-
-        public bool UpdateAdminInventory(Inventory item)
-        {
-            var existingItem = _inventory.FirstOrDefault(i => i.Id_Inventory == item.Id_Inventory);
-            if (existingItem == null)
-            {
-                return false; // El ítem no existe, no se puede actualizar
-            }
-
-            existingItem.Name = item.Name;
-            existingItem.Description = item.Description;
-            existingItem.Amount = item.Amount;
-
-            return true;
-        }
-
-        public bool DeleteAdminInventory(int itemId)
-        {
-            var item = _inventory.FirstOrDefault(i => i.Id_Inventory == itemId);
-            if (item == null)
-            {
-                return false; // El ítem no existe, no se puede eliminar
-            }
-
-            _inventory.Remove(item);
-            return true;
-        }
-
         // Implementación de métodos para Agenda
 
-        public List<Agenda> GetAdminAgenda()
+        public int AddAgenda(Agenda agenda)
         {
-            return _agenda;
+            _agenda.Add(agenda);
+            return agenda.Id_Agenda;
         }
 
-        public Agenda GetAdminAgendaById(int entryId)
+        public bool UpdateAgenda(Agenda agenda)
         {
-            return _agenda.FirstOrDefault(a => a.Id_Agenda == entryId);
-        }
-
-        public bool AddAdminAgenda(Agenda entry)
-        {
-            _agenda.Add(entry);
-            return true;
-        }
-
-        public bool UpdateAdminAgenda(Agenda entry)
-        {
-            var existingEntry = _agenda.FirstOrDefault(a => a.Id_Agenda == entry.Id_Agenda);
-            if (existingEntry == null)
+            var existingAgenda = _agenda.FirstOrDefault(a => a.Id_Agenda == agenda.Id_Agenda);
+            if (existingAgenda == null)
             {
-                return false; // La entrada no existe, no se puede actualizar
+                return false; // La agenda no existe, no se puede actualizar
             }
 
-            existingEntry.Fecha = entry.Fecha;
-            existingEntry.Description = entry.Description;
+            existingAgenda.Id_Pilot = agenda.Id_Pilot;
+            existingAgenda.Id_Flight = agenda.Id_Flight;
             // Actualizar otros campos según sea necesario
 
             return true;
         }
 
-        public bool DeleteAdminAgenda(int entryId)
+        public bool DeleteAgenda(int agendaId)
         {
-            var entry = _agenda.FirstOrDefault(a => a.Id_Agenda == entryId);
-            if (entry == null)
+            var agenda = _agenda.FirstOrDefault(a => a.Id_Agenda == agendaId);
+            if (agenda == null)
             {
-                return false; // La entrada no existe, no se puede eliminar
+                return false; // La agenda no existe, no se puede eliminar
             }
 
-            _agenda.Remove(entry);
+            _agenda.Remove(agenda);
             return true;
         }
 
-        // Implementación de métodos genéricos del repositorio
-
-        public int Add(Admin entity)
+        public Agenda GetAgendaById(int agendaId)
         {
-            _admins.Add(entity);
-            return entity.Id;
+            return _agenda.FirstOrDefault(a => a.Id_Agenda == agendaId);
         }
 
-        public Admin Get(int id)
+        public IEnumerable<Agenda> GetAgendasByPilotId(int pilotId)
         {
-            return _admins.FirstOrDefault(a => a.Id == id);
+            return _agenda.Where(a => a.Id_Pilot == pilotId);
         }
 
-        public bool Update(Admin entity)
+        public IEnumerable<Agenda> GetAgendasByFlightId(int flightId)
         {
-            var existingAdmin = _admins.FirstOrDefault(a => a.Id == entity.Id);
-            if (existingAdmin == null)
+            return _agenda.Where(a => a.Id_Flight == flightId);
+        }
+
+        public IEnumerable<Pilots> GetPilots()
+        {
+            return _pilot;
+        }
+
+        public Pilots GetPilotById(int pilotId)
+        {
+            return _pilot.FirstOrDefault(p => p.Id_Pilot == pilotId);
+        }
+
+        public bool AssignFlightToPilot(int pilotId, int flightId)
+        {
+            var pilot = _pilot.FirstOrDefault(p => p.Id_Pilot == pilotId);
+            var flight = _flights.FirstOrDefault(f => f.Id_Flight == flightId);
+
+            if (pilot == null || flight == null)
             {
-                return false; // El admin no existe, no se puede actualizar
+                return false; // El piloto o el vuelo no existen
             }
 
-            existingAdmin.Name = entity.Name;
-            existingAdmin.Email = entity.Email;
-            // Actualizar otros campos según sea necesario
+            var agenda = new Agenda
+            {
+                Id_Pilot = pilotId,
+                Id_Flight = flightId
+            };
 
+            _agenda.Add(agenda);
             return true;
         }
 
-        public bool Delete(int id)
-        {
-            var admin = _admins.FirstOrDefault(a => a.Id == id);
-            if (admin == null)
-            {
-                return false; // El admin no existe, no se puede eliminar
-            }
-
-            _admins.Remove(admin);
-            return true;
-        }
     }
 }

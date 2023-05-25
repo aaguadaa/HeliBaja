@@ -76,7 +76,9 @@
     <Compile Include="Model\Flight.cs" />
     <Compile Include="Model\Inventory.cs" />
     <Compile Include="Model\Pilots.cs" />
+    <Compile Include="Model\Tools.cs" />
     <Compile Include="Model\Users.cs" />
+    <Compile Include="Model\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

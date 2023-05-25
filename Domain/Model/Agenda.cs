@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Model
 {
@@ -11,9 +8,18 @@ namespace Domain.Model
     {
         [Key]
         public int Id_Agenda { get; set; }
-        public DateTime Fecha { get; set; }
-        public string Description { get; set; }
-        public List<Flight> Flights { get; set; }
-        public Flight Flight { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public int Id_Pilot { get; set; }
+
+        public int Id_Flight { get; set; }
+        public string Itinerary { get; set; }
+
+        // Relación con el piloto
+        public virtual Pilots Pilot { get; set; }
+
+        // Relación con el vuelo
+        public virtual Flight Flight { get; set; }
     }
 }

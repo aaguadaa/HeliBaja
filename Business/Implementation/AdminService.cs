@@ -25,161 +25,114 @@ namespace Business.Services
             _agendaRepository = agendaRepository;
         }
 
-        // Admin
-
-        public List<Admin> GetAdmins()
+        public int AddAdmin(Admin admin)
         {
-            return _adminRepository.GetAdmins();
-        }
-
-        public Admin GetAdminById(int adminId)
-        {
-            return _adminRepository.GetAdminById(adminId);
-        }
-
-        public bool AddAdmin(Admin admin)
-        {
-            return _adminRepository.AddAdmin(admin);
-        }
-
-        public bool UpdateAdmin(Admin admin)
-        {
-            return _adminRepository.UpdateAdmin(admin);
-        }
-
-        public bool DeleteAdmin(int adminId)
-        {
-            return _adminRepository.DeleteAdmin(adminId);
-        }
-
-        // Booking
-
-        public List<Booking> GetAdminBookings()
-        {
-            return _bookingRepository.GetAdminBookings();
-        }
-
-        public bool AddAdminBooking(Booking booking)
-        {
-            return _bookingRepository.AddAdminBooking(booking);
-        }
-
-        public bool UpdateAdminBooking(Booking booking)
-        {
-            return _bookingRepository.UpdateAdminBooking(booking);
-        }
-
-        public bool DeleteAdminBooking(int bookingId)
-        {
-            return _bookingRepository.DeleteAdminBooking(bookingId);
-        }
-
-        // Flight
-
-        public List<Flight> GetAdminFlights()
-        {
-            return _flightRepository.GetAdminFlights();
+            throw new System.NotImplementedException();
         }
 
         public bool AddAdminFlight(Flight flight)
         {
-            return _flightRepository.AddAdminFlight(flight);
+            throw new System.NotImplementedException();
         }
 
-        public bool UpdateAdminFlight(Flight flight)
+        public int AddAgenda(Agenda agenda)
         {
-            return _flightRepository.UpdateAdminFlight(flight);
+            throw new System.NotImplementedException();
+        }
+
+        public bool AssignFlightToPilot(int pilotId, int flightId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool DeleteAdmin(int adminId)
+        {
+            throw new System.NotImplementedException();
         }
 
         public bool DeleteAdminFlight(int flightId)
         {
-            return _flightRepository.DeleteAdminFlight(flightId);
+            throw new System.NotImplementedException();
         }
 
-        // User
-
-        public List<Users> GetAdminUsers()
+        public bool DeleteAgenda(int agendaId)
         {
-            return _userRepository.GetAdminUsers();
+            throw new System.NotImplementedException();
         }
 
-        public Users GetAdminUserById(int userId)
+        public List<Booking> GetAdminBookings()
         {
-            return NewMethod(userId);
+            throw new System.NotImplementedException();
         }
 
-        private Users NewMethod(int userId)
+        public Admin GetAdminById(int adminId)
         {
-            return _userRepository.GetAdminUserById(userId);
+            throw new System.NotImplementedException();
         }
 
-        public bool AddAdminUser(Users user)
+        public Flight GetAdminFlightById(int flightId)
         {
-            return _userRepository.AddAdminUser(user);
+            throw new System.NotImplementedException();
         }
 
-        public bool UpdateAdminUser(Users user)
+        public List<Flight> GetAdminFlights()
         {
-            return _userRepository.UpdateAdminUser(user);
+            throw new System.NotImplementedException();
         }
-
-        public bool DeleteAdminUser(int userId)
-        {
-            return _userRepository.DeleteAdminUser(userId);
-        }
-
-        // Inventory
 
         public List<Inventory> GetAdminInventory()
         {
-            return _inventoryRepository.GetAdminInventory();
+            throw new System.NotImplementedException();
         }
 
-        public Inventory GetAdminInventoryById(int itemId)
+        public List<Users> GetAdminUsers()
         {
-            return _inventoryRepository.GetAdminInventoryById(itemId);
+            throw new System.NotImplementedException();
         }
 
-        public bool AddAdminInventory(Inventory item)
+        public Agenda GetAgendaById(int agendaId)
         {
-            return _inventoryRepository.AddAdminInventory(item);
+            throw new System.NotImplementedException();
         }
 
-        public bool UpdateAdminInventory(Inventory item)
+        public IEnumerable<Agenda> GetAgendasByFlightId(int flightId)
         {
-            return _inventoryRepository.UpdateAdminInventory(item);
+            throw new System.NotImplementedException();
         }
 
-        public bool DeleteAdminInventory(int itemId)
+        public IEnumerable<Agenda> GetAgendasByPilotId(int pilotId)
         {
-            return _inventoryRepository.DeleteAdminInventory(itemId);
+            throw new System.NotImplementedException();
         }
 
-        // Agenda
-
-        public List<Agenda> GetAdminAgenda()
+        public Pilots GetPilotById(int pilotId)
         {
-            return _agendaRepository.GetAdminAgenda();
+            throw new System.NotImplementedException();
         }
 
-        public Agenda GetAdminAgendaById(int entryId)
+        public IEnumerable<Pilots> GetPilots()
         {
-            return _agendaRepository.GetAdminAgendaById(entryId);
+            throw new System.NotImplementedException();
         }
 
-        public bool AddAdminAgenda(Agenda entry)
+        public bool UpdateAdmin(Admin admin)
         {
-            return _agendaRepository.AddAdminAgenda(entry);
+            throw new System.NotImplementedException();
         }
 
-        public bool UpdateAdminAgenda(Agenda entry)
+        public bool UpdateAdminBooking(Booking booking)
         {
-            return _agendaRepository.UpdateAdminAgenda(entry);
+            throw new System.NotImplementedException();
         }
 
-        public bool DeleteAdminAgenda(int entryId)
+        public bool UpdateAdminFlight(Flight flight)
         {
-            return _agendaRepository.DeleteAdminAgenda(entryId);
+            throw new System.NotImplementedException();
+        }
+
+        public bool UpdateAgenda(Agenda agenda)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

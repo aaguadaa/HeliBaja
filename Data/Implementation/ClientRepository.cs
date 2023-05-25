@@ -60,92 +60,120 @@ namespace Data.Repositories
             return true;
         }
 
-        public List<Booking> GetBookings(int clientId)
+        public Clients GetClientById(int clientId)
         {
-            var bookings = _dbContext.Bookings.Where(b => b.Id_Client == clientId).ToList();
-            return bookings;
+            return _dbContext.Clients.FirstOrDefault(c => c.Id_Client == clientId);
         }
 
-        public async Task<IEnumerable<Clients>> GetAllAsync()
+        public Clients GetClientByEmail(string email)
         {
-            return await Task.FromResult(GetAll());
+            return _dbContext.Clients.FirstOrDefault(c => c.Email == email);
         }
 
-        public async Task<Clients> GetAsync(int id)
+        public Clients GetClientByCredentials(string email, string password)
         {
-            return await Task.FromResult(Get(id));
+            return _dbContext.Clients.FirstOrDefault(c => c.Email == email && c.Password == password);
         }
 
-        public async Task<int> AddAsync(Clients entity)
+        public List<Flight> GetAvailableFlights()
         {
-            return await Task.Run(() => Add(entity));
+            return _dbContext.Flights.ToList();
         }
 
-        public async Task<bool> UpdateAsync(Clients entity)
+        public Flight GetFlightDetails(int flightId)
         {
-            return await Task.Run(() => Update(entity));
+            return _dbContext.Flights.FirstOrDefault(f => f.Id_Flight == flightId);
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public bool CreateBooking(Booking booking)
         {
-            return await Task.Run(() => Delete(id));
+            _dbContext.Bookings.Add(booking);
+            _dbContext.SaveChanges();
+            return true;
         }
 
-        public bool AddBookingToClient(int bookingId, int clientId)
+        public bool UpdateBooking(Booking booking)
         {
-            var client = _dbContext.Clients.FirstOrDefault(c => c.Id_Client == clientId);
+            var existingBooking = _dbContext.Bookings.FirstOrDefault(b => b.Id_Booking == booking.Id_Booking);
+            if (existingBooking == null)
+            {
+                return false;
+            }
+            existingBooking.CreatedDate = booking.CreatedDate;
+            existingBooking.Id_Flight = booking.Id_Flight;
+            existingBooking.Id_Client = booking.Id_Client;
+            _dbContext.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteBooking(int bookingId)
+        {
             var booking = _dbContext.Bookings.FirstOrDefault(b => b.Id_Booking == bookingId);
+            if (booking == null)
+            {
+                return false;
+            }
+            _dbContext.Bookings.Remove(booking);
+            _dbContext.SaveChanges();
+            return true;
+        }
 
-            if (client == null || booking == null)
+        public bool CancelBooking(int bookingId)
+        {
+            var booking = _dbContext.Bookings.FirstOrDefault(b => b.Id_Booking == bookingId);
+            if (booking == null)
             {
                 return false;
             }
 
-            client.Bookings.Add(booking);
-            _dbContext.SaveChanges();
-
-            return true;
-        }
-
-        public bool RemoveBookingFromClient(int bookingId, int clientId)
-        {
-            var client = _dbContext.Clients.FirstOrDefault(c => c.Id_Client == clientId);
-            var booking = _dbContext.Bookings.FirstOrDefault(b => b.Id_Booking == bookingId);
-
-            if (client == null || booking == null)
+            // Verificar si el tour está dentro del límite de cancelación (2 días antes)
+            var twoDaysBeforeTour = booking.TourDate.AddDays(-2);
+            if (twoDaysBeforeTour <= System.DateTime.Now)
             {
                 return false;
             }
 
-            client.Bookings.Remove(booking);
+            _dbContext.Bookings.Remove(booking);
             _dbContext.SaveChanges();
-
             return true;
         }
 
-        Task<IEnumerable<Clients>> IClientRepository.GetAll()
+        public List<Booking> GetAllBookingsByClientId(int clientId)
         {
-            return GetAllAsync();
+            return _dbContext.Bookings.Where(b => b.Id_Client == clientId).ToList();
         }
 
-        Task<Clients> IClientRepository.Get(int id)
+        public bool Login(string email, string password)
         {
-            return GetAsync(id);
+            var client = _dbContext.Clients.FirstOrDefault(c => c.Email == email && c.Password == password);
+            return client != null;
         }
 
-        Task<int> IClientRepository.Add(Clients entity)
+        public void Logout()
         {
-            return AddAsync(entity);
+            throw new System.NotImplementedException();
         }
 
-        Task<bool> IClientRepository.Update(Clients entity)
+        public bool RecoverAccount(string email)
         {
-            return UpdateAsync(entity);
+            Clients client = GetClientByEmail(email);
+
+            /*if (client != null)
+            {
+                // Generar una nueva contraseña o enviar instrucciones para restablecer la contraseña
+                string newPassword = GenerateNewPassword();
+
+                // Enviar un correo electrónico con instrucciones detalladas para el restablecimiento de la cuenta
+                SendRecoveryEmail(client.Email, newPassword);
+
+                return true; // La recuperación de la cuenta fue exitosa
+            }*/
+            return false;
         }
 
-        Task<bool> IClientRepository.Delete(int id)
+        public Booking GetBookingById(int bookingId)
         {
-            return DeleteAsync(id);
+            return _dbContext.Bookings.FirstOrDefault(b => b.Id_Booking == bookingId);
         }
     }
 }

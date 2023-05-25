@@ -82,6 +82,7 @@
     <Compile Include="Contracts\IInventoryRepository.cs" />
     <Compile Include="Contracts\IPilotRepository.cs" />
     <Compile Include="Contracts\IUserRepository.cs" />
+    <Compile Include="Contracts\IToolsRepository.cs" />
     <Compile Include="HeliBajaDBContext.cs" />
     <Compile Include="HeliBajaInitializer.cs" />
     <Compile Include="Implementation\AdminRepository.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Implementation\FlightRepository.cs" />
     <Compile Include="Implementation\InventoryRepository.cs" />
     <Compile Include="Implementation\PilotRepository.cs" />
+    <Compile Include="Implementation\ToolsRepository.cs" />
     <Compile Include="Implementation\UserRepository.cs" />
     <Compile Include="Migrations\202305211050422_heli.cs" />
     <Compile Include="Migrations\202305211050422_heli.designer.cs">

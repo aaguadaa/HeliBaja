@@ -3,6 +3,7 @@ using Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Data.Implementation
 {
@@ -21,48 +22,9 @@ namespace Data.Implementation
             return _context.SaveChanges();
         }
 
-        public bool AddAdminFlight(Flight flight)
-        {
-            _context.Flights.Add(flight);
-            return _context.SaveChanges() > 0;
-        }
-
-        public bool AddFlightToPilot(int Id_Flight, int Id_Pilot)
-        {
-            var flight = _context.Flights.FirstOrDefault(f => f.Id_Flight == Id_Flight);
-            if (flight != null)
-            {
-                flight.PilotId = Id_Pilot;
-                return _context.SaveChanges() > 0;
-            }
-            return false;
-        }
-
         public bool Delete(int id)
         {
             var flight = _context.Flights.FirstOrDefault(f => f.Id_Flight == id);
-            if (flight != null)
-            {
-                _context.Flights.Remove(flight);
-                return _context.SaveChanges() > 0;
-            }
-            return false;
-        }
-
-        public bool DeleteAdminFlight(int flightId)
-        {
-            var flight = _context.Flights.FirstOrDefault(f => f.Id_Flight == flightId && f.PilotId == 0);
-            if (flight != null)
-            {
-                _context.Flights.Remove(flight);
-                return _context.SaveChanges() > 0;
-            }
-            return false;
-        }
-
-        public bool DeleteFlight(int Id_Flight)
-        {
-            var flight = _context.Flights.FirstOrDefault(f => f.Id_Flight == Id_Flight);
             if (flight != null)
             {
                 _context.Flights.Remove(flight);
@@ -81,20 +43,44 @@ namespace Data.Implementation
             return _context.Flights.Where(f => f.PilotId == 0).ToList();
         }
 
+        public List<Flight> GetAllFlights()
+        {
+            return _context.Flights.ToList();
+        }
+
+        public List<Flight> GetAvailableFlights()
+        {
+            return _context.Flights.Where(f => !f.Bookings.Any() || f.Status == "Disponible").ToList();
+        }
+
         public List<Flight> GetFlights()
         {
             return _context.Flights.ToList();
         }
 
-        public bool RemoveFlightFromPilot(int Id_Flight, int Id_Pilot)
+        public Task<IEnumerable<Flight>> GetFlightsByBookingId(int bookingId)
         {
-            var flight = _context.Flights.FirstOrDefault(f => f.Id_Flight == Id_Flight && f.PilotId == Id_Pilot);
-            if (flight != null)
-            {
-                flight.PilotId = 0; // Asignar un valor de 0 en lugar de nulo para el ID del piloto
-                return _context.SaveChanges() > 0;
-            }
-            return false;
+            return Task.FromResult<IEnumerable<Flight>>(_context.Flights.Where(f => f.Bookings.Any(b => b.Id_Booking == bookingId)));
+        }
+
+        public Task<IEnumerable<Flight>> GetFlightsByDate(DateTime date)
+        {
+            return Task.FromResult<IEnumerable<Flight>>(_context.Flights.Where(f => f.HoraSalida.Date == date.Date));
+        }
+
+        public Task<IEnumerable<Flight>> GetFlightsByDateRange(DateTime startDate, DateTime endDate)
+        {
+            return Task.FromResult<IEnumerable<Flight>>(_context.Flights.Where(f => f.HoraSalida.Date >= startDate.Date && f.HoraSalida.Date <= endDate.Date));
+        }
+
+        public Task<IEnumerable<Flight>> GetFlightsByPilotId(int pilotId)
+        {
+            return Task.FromResult<IEnumerable<Flight>>(_context.Flights.Where(f => f.PilotId == pilotId));
+        }
+
+        public Task<IEnumerable<Flight>> GetFlightsByStatus(string status)
+        {
+            return Task.FromResult<IEnumerable<Flight>>(_context.Flights.Where(f => f.Status == status));
         }
 
         public bool Update(Flight entity)
@@ -108,46 +94,7 @@ namespace Data.Implementation
                 existingFlight.HoraSalida = entity.HoraSalida;
                 existingFlight.HoraLlegada = entity.HoraLlegada;
                 existingFlight.Bookings = entity.Bookings;
-                existingFlight.Agendas = entity.Agendas;
-                existingFlight.Id_Agenda = entity.Id_Agenda;
                 existingFlight.PilotId = entity.PilotId;
-                return _context.SaveChanges() > 0;
-            }
-            return false;
-        }
-
-        public bool UpdateAdminFlight(Flight flight)
-        {
-            var existingFlight = _context.Flights.FirstOrDefault(f => f.Id_Flight == flight.Id_Flight && f.PilotId == 0);
-            if (existingFlight != null)
-            {
-                existingFlight.NumeroVuelo = flight.NumeroVuelo;
-                existingFlight.Origen = flight.Origen;
-                existingFlight.Destino = flight.Destino;
-                existingFlight.HoraSalida = flight.HoraSalida;
-                existingFlight.HoraLlegada = flight.HoraLlegada;
-                existingFlight.Bookings = flight.Bookings;
-                existingFlight.Agendas = flight.Agendas;
-                existingFlight.Id_Agenda = flight.Id_Agenda;
-                return _context.SaveChanges() > 0;
-            }
-            return false;
-        }
-
-        public bool UpdateFlight(Flight flight)
-        {
-            var existingFlight = _context.Flights.FirstOrDefault(f => f.Id_Flight == flight.Id_Flight);
-            if (existingFlight != null)
-            {
-                existingFlight.NumeroVuelo = flight.NumeroVuelo;
-                existingFlight.Origen = flight.Origen;
-                existingFlight.Destino = flight.Destino;
-                existingFlight.HoraSalida = flight.HoraSalida;
-                existingFlight.HoraLlegada = flight.HoraLlegada;
-                existingFlight.Bookings = flight.Bookings;
-                existingFlight.Agendas = flight.Agendas;
-                existingFlight.Id_Agenda = flight.Id_Agenda;
-                existingFlight.PilotId = flight.PilotId;
                 return _context.SaveChanges() > 0;
             }
             return false;

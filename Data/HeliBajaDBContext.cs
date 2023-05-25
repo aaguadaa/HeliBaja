@@ -21,6 +21,7 @@ namespace Data
         public DbSet<Agenda> Agendas { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Tools> tools { get; set; }
         public HeliBajaDBContext() : base("HeliBaja")
         {
 

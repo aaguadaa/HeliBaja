@@ -36,20 +36,31 @@ namespace HeliBaja
             container.RegisterWebApiControllers(config);
             container.Register<IUserService, UserService>();
             container.Register<IUserRepository, UserRepository>();
+
             container.Register<IAdminService, AdminService>();
             container.Register<IAdminRepository, AdminRepository>();
+
             container.Register<IPilotService, PilotService>();
             container.Register<IPilotRepository, PilotRepository>();
-            container.Register<IClientService, ClientService>();
-            container.Register<IClientRepository, ClientRepository>();
-            container.Register<IInventoryService, InventoryService>();
-            container.Register<IInventoryRepository, InventoryRepository>();
-            container.Register<IFlightService, FlightService>();
-            container.Register<IFlightRepository, FlightRepository>();
+
             container.Register<IAgendaService, AgendaService>();
             container.Register<IAgendaRepository, AgendaRepository>();
+
+            container.Register<IClientService, ClientService>();
+            container.Register<IClientRepository, ClientRepository>();
+
             container.Register<IBookingService, BookingService>();
             container.Register<IBookingRepository, BookingRepository>();
+
+            container.Register<IFlightService, FlightService>();
+            container.Register<IFlightRepository, FlightRepository>();
+
+            container.Register<IInventoryService, InventoryService>();
+            container.Register<IInventoryRepository, InventoryRepository>();
+
+            container.Register<IToolsService, ToolsService>();
+            container.Register<IToolsRepository, ToolsRepository>();
+
             container.Register<HeliBajaDBContext>(Lifestyle.Scoped);
 
             container.Verify();

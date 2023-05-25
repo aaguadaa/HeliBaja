@@ -15,13 +15,13 @@ namespace Data.Implementation
             _context = context;
         }
 
-        public int AddUser(Users user)
+        public int Add(Users user)
         {
             _context.Users.Add(user);
             return _context.SaveChanges();
         }
 
-        public bool UpdateUser(Users user)
+        public bool Update(Users user)
         {
             var existingUser = _context.Users.Find(user.Id);
             if (existingUser == null)
@@ -38,7 +38,7 @@ namespace Data.Implementation
             return _context.SaveChanges() > 0;
         }
 
-        public bool DeleteUser(int userId)
+        public bool Delete(int userId)
         {
             var user = _context.Users.Find(userId);
             if (user == null)
@@ -46,11 +46,6 @@ namespace Data.Implementation
 
             _context.Users.Remove(user);
             return _context.SaveChanges() > 0;
-        }
-
-        public Users GetUserById(int userId)
-        {
-            return _context.Users.Find(userId);
         }
 
         public Users GetUserByEmail(string email)
@@ -89,7 +84,6 @@ namespace Data.Implementation
             _context.Bookings.Add(booking);
             return _context.SaveChanges() > 0;
         }
-
         public bool CancelBooking(int bookingId)
         {
             var booking = _context.Bookings.Find(bookingId);
@@ -99,7 +93,6 @@ namespace Data.Implementation
             _context.Bookings.Remove(booking);
             return _context.SaveChanges() > 0;
         }
-
 
         public List<Users> GetAdminUsers()
         {
@@ -132,6 +125,39 @@ namespace Data.Implementation
                 return _context.SaveChanges() > 0;
             }
             return false;
+        }
+        public bool AssignUserType(int userId, UserType userType)
+        {
+            var user = _context.Users.Find(userId);
+            if (user == null)
+                return false;
+
+            if (userType == UserType.Pilot)
+            {
+                // Asignar el id del piloto al usuario
+                var pilot = new Pilots();
+                _context.Pilots.Add(pilot);
+                _context.SaveChanges();
+
+                user.PilotId = pilot.Id_Pilot;
+                user.ClientId = null;
+            }
+            else if (userType == UserType.Client)
+            {
+                // Asignar el id del cliente al usuario
+                var client = new Clients();
+                _context.Clients.Add(client);
+                _context.SaveChanges();
+
+                user.PilotId = null;
+                user.ClientId = client.Id_Client;
+            }
+
+            return _context.SaveChanges() > 0;
+        }
+        public Users Get(int id)
+        {
+            return _context.Users.Find(id);
         }
     }
 }

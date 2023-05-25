@@ -14,7 +14,7 @@ namespace Business.Implementation
             _agendaRepository = agendaRepository;
         }
 
-        public int CreateAgenda(Agenda agenda)
+        public int AddAgenda(Agenda agenda)
         {
             return _agendaRepository.Add(agenda);
         }
@@ -34,19 +34,19 @@ namespace Business.Implementation
             return _agendaRepository.Get(agendaId);
         }
 
-        public bool AddFlightToAgenda(int agendaId, int flightId)
+        public IEnumerable<Agenda> GetAgendasByFlightId(int flightId)
         {
-            return _agendaRepository.AddFlight(agendaId, flightId);
+            return _agendaRepository.GetAgendasByFlightId(flightId);
         }
 
-        public bool RemoveFlightFromAgenda(int agendaId, int flightId)
+        public IEnumerable<Agenda> GetAgendasByPilotId(int pilotId)
         {
-            return _agendaRepository.RemoveFlight(agendaId, flightId);
+            return _agendaRepository.GetAgendasByPilotId(pilotId);
         }
 
-        public List<Agenda> GetAllAgendas()
+        public IEnumerable<Agenda> GetAllAgendas()
         {
-            return _agendaRepository.GetAdminAgenda();
+            return _agendaRepository.GetAll();
         }
     }
 }
