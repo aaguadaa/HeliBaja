@@ -1,17 +1,67 @@
-﻿using System;
+﻿using Business.Contracts;
+using Domain.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Web.Http;
 
 namespace HeliBaja.Controllers
 {
-    public class AdminController : Controller
+    [RoutePrefix("api/admins")]
+    public class AdminController : ApiController
     {
-        // GET: Admin
-        public ActionResult Index()
+        private readonly IAdminService _adminService;
+
+        public AdminController(IAdminService adminService)
         {
-            return View();
+            _adminService = adminService;
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        public IHttpActionResult GetAdminById(int id)
+        {
+            Admin admin = _adminService.GetAdminById(id);
+            if (admin == null)
+                return NotFound();
+
+            return Ok(admin);
+        }
+
+        [Route("")]
+        [HttpPost]
+        public IHttpActionResult CreateAdmin([FromBody] Admin admin)
+        {
+            if (admin == null)
+                return BadRequest("Request is null");
+
+            int adminId = _adminService.AddAdmin(admin);
+            var payload = new { Id = adminId };
+            return Ok(payload);
+        }
+
+        [Route("{id}")]
+        [HttpPut]
+        public IHttpActionResult UpdateAdmin(int id, [FromBody] Admin admin)
+        {
+            if (admin == null)
+                return BadRequest("Request is null");
+
+            admin.Id = id;
+            bool updated = _adminService.UpdateAdmin(admin);
+            if (!updated)
+                return BadRequest("Unable to update admin");
+
+            return Ok(admin);
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteAdmin(int id)
+        {
+            bool deleted = _adminService.DeleteAdmin(id);
+            if (!deleted)
+                return NotFound();
+
+            return Ok();
         }
     }
 }

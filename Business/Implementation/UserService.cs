@@ -84,20 +84,21 @@ namespace Business.Implementation
         {
             return _userRepository.GetAdminUsers();
         }
-        public Users GetAdminUserById(int userId)
+        public Users Get(int userId)
         {
             return _userRepository.GetAdminUserById(userId);
         }
-        public bool AddAdminUser(Users user)
+        public int Add(Users user)
         {
             if (user == null || string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Email))
-                return false;
+                return -1; // Código de error para datos inválidos
 
             user.IsAdmin = true;
             _userRepository.Add(user);
-            return true;
+
+            return user.Id; // Puedes devolver el ID del usuario o cualquier otro valor representativo
         }
-        public bool UpdateAdminUser(Users user)
+        public bool Update(Users user)
         {
             Users existingUser = _userRepository.GetAdminUserById(user.Id);
             if (existingUser == null)
@@ -109,7 +110,7 @@ namespace Business.Implementation
             _userRepository.Update(existingUser);
             return true;
         }
-        public bool DeleteAdminUser(int userId)
+        public bool Delete(int userId)
         {
             Users existingUser = _userRepository.GetAdminUserById(userId);
             if (existingUser == null || !existingUser.IsAdmin)

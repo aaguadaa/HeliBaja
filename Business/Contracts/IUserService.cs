@@ -12,9 +12,9 @@ namespace Business.Contracts
         bool BookFlight(int userId, int flightId);
         bool CancelBooking(int bookingId);
         List<Users> GetAdminUsers();
-        Users GetAdminUserById(int userId);
-        bool AddAdminUser(Users user);
-        bool UpdateAdminUser(Users user);
-        bool DeleteAdminUser(int userId);
+        Users Get(int userId);
+        int Add(Users user);
+        bool Update(Users user);
+        bool Delete(int userId);
     }
 }
