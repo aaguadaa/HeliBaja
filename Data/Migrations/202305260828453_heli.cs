@@ -25,6 +25,11 @@
                         Id_Booking = c.Int(nullable: false, identity: true),
                         Id_Client = c.Int(nullable: false),
                         Id_Flight = c.Int(nullable: false),
+                        CreatedDate = c.DateTime(nullable: false),
+                        TourDate = c.DateTime(nullable: false),
+                        PaymentMethod = c.String(),
+                        PaymentStatus = c.String(),
+                        BookingStatus = c.String(),
                         Admin_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id_Booking)
@@ -54,41 +59,20 @@
                     {
                         Id_Flight = c.Int(nullable: false, identity: true),
                         NumeroVuelo = c.String(),
+                        Status = c.String(),
                         Origen = c.String(),
                         Destino = c.String(),
                         HoraSalida = c.DateTime(nullable: false),
                         HoraLlegada = c.DateTime(nullable: false),
-                        Id_Agenda = c.Int(nullable: false),
                         PilotId = c.Int(nullable: false),
-                        Agenda_Id_Agenda = c.Int(),
-                        Agendas_Id_Agenda = c.Int(),
                         Admin_Id = c.Int(),
-                        Pilot_Id_Pilot = c.Int(),
+                        Pilots_Id_Pilot = c.Int(),
                     })
                 .PrimaryKey(t => t.Id_Flight)
-                .ForeignKey("dbo.Agenda", t => t.Agenda_Id_Agenda)
-                .ForeignKey("dbo.Agenda", t => t.Agendas_Id_Agenda)
                 .ForeignKey("dbo.Admins", t => t.Admin_Id)
-                .ForeignKey("dbo.Pilots", t => t.Pilot_Id_Pilot)
-                .Index(t => t.Agenda_Id_Agenda)
-                .Index(t => t.Agendas_Id_Agenda)
+                .ForeignKey("dbo.Pilots", t => t.Pilots_Id_Pilot)
                 .Index(t => t.Admin_Id)
-                .Index(t => t.Pilot_Id_Pilot);
-            
-            CreateTable(
-                "dbo.Agenda",
-                c => new
-                    {
-                        Id_Agenda = c.Int(nullable: false, identity: true),
-                        Fecha = c.DateTime(nullable: false),
-                        Flight_Id_Flight = c.Int(),
-                        Pilot_Id_Pilot = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id_Agenda)
-                .ForeignKey("dbo.Flights", t => t.Flight_Id_Flight)
-                .ForeignKey("dbo.Pilots", t => t.Pilot_Id_Pilot)
-                .Index(t => t.Flight_Id_Flight)
-                .Index(t => t.Pilot_Id_Pilot);
+                .Index(t => t.Pilots_Id_Pilot);
             
             CreateTable(
                 "dbo.Inventories",
@@ -98,11 +82,46 @@
                         Name = c.String(),
                         Description = c.String(),
                         Amount = c.Int(nullable: false),
+                        Available = c.Boolean(nullable: false),
+                        AdminInventory = c.Boolean(nullable: false),
+                        Date = c.DateTime(nullable: false),
                         Admin_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id_Inventory)
                 .ForeignKey("dbo.Admins", t => t.Admin_Id)
                 .Index(t => t.Admin_Id);
+            
+            CreateTable(
+                "dbo.Tools",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Quantity = c.Int(nullable: false),
+                        Description = c.String(),
+                        Date = c.DateTime(nullable: false),
+                        Status = c.Boolean(nullable: false),
+                        Inventory_Id_Inventory = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Inventories", t => t.Inventory_Id_Inventory)
+                .Index(t => t.Inventory_Id_Inventory);
+            
+            CreateTable(
+                "dbo.Agenda",
+                c => new
+                    {
+                        Id_Agenda = c.Int(nullable: false, identity: true),
+                        Date = c.DateTime(nullable: false),
+                        Id_Pilot = c.Int(nullable: false),
+                        Id_Flight = c.Int(nullable: false),
+                        Itinerary = c.String(),
+                    })
+                .PrimaryKey(t => t.Id_Agenda)
+                .ForeignKey("dbo.Flights", t => t.Id_Flight, cascadeDelete: true)
+                .ForeignKey("dbo.Pilots", t => t.Id_Pilot, cascadeDelete: true)
+                .Index(t => t.Id_Pilot)
+                .Index(t => t.Id_Flight);
             
             CreateTable(
                 "dbo.Pilots",
@@ -127,6 +146,8 @@
                         AMaterno = c.String(),
                         Email = c.String(),
                         Password = c.String(),
+                        IsAdmin = c.Boolean(nullable: false),
+                        UserType = c.Int(nullable: false),
                         PilotId = c.Int(),
                         ClientId = c.Int(),
                         Cliente_Id_Client = c.Int(),
@@ -144,32 +165,31 @@
         {
             DropForeignKey("dbo.Users", "Piloto_Id_Pilot", "dbo.Pilots");
             DropForeignKey("dbo.Users", "Cliente_Id_Client", "dbo.Clients");
-            DropForeignKey("dbo.Flights", "Pilot_Id_Pilot", "dbo.Pilots");
-            DropForeignKey("dbo.Agenda", "Pilot_Id_Pilot", "dbo.Pilots");
+            DropForeignKey("dbo.Flights", "Pilots_Id_Pilot", "dbo.Pilots");
+            DropForeignKey("dbo.Agenda", "Id_Pilot", "dbo.Pilots");
+            DropForeignKey("dbo.Agenda", "Id_Flight", "dbo.Flights");
             DropForeignKey("dbo.Inventories", "Admin_Id", "dbo.Admins");
+            DropForeignKey("dbo.Tools", "Inventory_Id_Inventory", "dbo.Inventories");
             DropForeignKey("dbo.Flights", "Admin_Id", "dbo.Admins");
             DropForeignKey("dbo.Bookings", "Admin_Id", "dbo.Admins");
             DropForeignKey("dbo.Bookings", "Id_Flight", "dbo.Flights");
-            DropForeignKey("dbo.Flights", "Agendas_Id_Agenda", "dbo.Agenda");
-            DropForeignKey("dbo.Flights", "Agenda_Id_Agenda", "dbo.Agenda");
-            DropForeignKey("dbo.Agenda", "Flight_Id_Flight", "dbo.Flights");
             DropForeignKey("dbo.Bookings", "Id_Client", "dbo.Clients");
             DropIndex("dbo.Users", new[] { "Piloto_Id_Pilot" });
             DropIndex("dbo.Users", new[] { "Cliente_Id_Client" });
+            DropIndex("dbo.Agenda", new[] { "Id_Flight" });
+            DropIndex("dbo.Agenda", new[] { "Id_Pilot" });
+            DropIndex("dbo.Tools", new[] { "Inventory_Id_Inventory" });
             DropIndex("dbo.Inventories", new[] { "Admin_Id" });
-            DropIndex("dbo.Agenda", new[] { "Pilot_Id_Pilot" });
-            DropIndex("dbo.Agenda", new[] { "Flight_Id_Flight" });
-            DropIndex("dbo.Flights", new[] { "Pilot_Id_Pilot" });
+            DropIndex("dbo.Flights", new[] { "Pilots_Id_Pilot" });
             DropIndex("dbo.Flights", new[] { "Admin_Id" });
-            DropIndex("dbo.Flights", new[] { "Agendas_Id_Agenda" });
-            DropIndex("dbo.Flights", new[] { "Agenda_Id_Agenda" });
             DropIndex("dbo.Bookings", new[] { "Admin_Id" });
             DropIndex("dbo.Bookings", new[] { "Id_Flight" });
             DropIndex("dbo.Bookings", new[] { "Id_Client" });
             DropTable("dbo.Users");
             DropTable("dbo.Pilots");
-            DropTable("dbo.Inventories");
             DropTable("dbo.Agenda");
+            DropTable("dbo.Tools");
+            DropTable("dbo.Inventories");
             DropTable("dbo.Flights");
             DropTable("dbo.Clients");
             DropTable("dbo.Bookings");
